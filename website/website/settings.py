@@ -38,10 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'djstripe',
+
     'apps.core',
     'apps.usuario',
     'apps.agendamento',
     'apps.clube',
+
 ]
 
 MIDDLEWARE = [
@@ -131,3 +135,11 @@ STATICFILES_DIRS = (
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#Configuração do Strip
+STRIPE_TEST_PUBLIC_KEY = os.environ.get("STRIPE_TEST_PUBLIC_KEY", "pk_test_51M77STGORsxenfcwO0Ms6m5cxRi4h4NUJ8yAVVmpY31FimrwMZTAKlqyiHNjkz1MrO5xsdCJrPS0C2APfl2FzoF400xfodmNQc")
+STRIPE_TEST_SECRET_KEY = os.environ.get("STRIPE_TEST_SECRET_KEY", "sk_test_51M77STGORsxenfcwIpIsRrkxKv8cVgpzjmk3bVRcATWjRCFFKQxRpqgXoeSJOKeU0DTJPbxzOTfRLxR70zRcEtoe00PcCkVNWc")
+STRIPE_LIVE_MODE = False
+DJSTRIPE_WEBHOOK_SECRET = "whsec_xxx"  # We don't use this, but it must be set
+DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
