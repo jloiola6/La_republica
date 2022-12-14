@@ -4,9 +4,9 @@ from apps.clube.models import *
 
 # Register your models here.
 
-# class ClubeAdmin(admin.ModelAdmin):
+class LinkPagamentoAdmin(admin.ModelAdmin):
 
-#     list_display = ('usuario', 'mes', 'ano', 'situacao')
-#     search_fields = ['usuario', 'mes', 'ano', 'situacao']
+    list_display = ('produto', 'link')
+    search_fields = ['produto', 'link']
 
-# admin.site.register(Clube, ClubeAdmin)
+admin.site.register(LinkPagamento, LinkPagamentoAdmin)

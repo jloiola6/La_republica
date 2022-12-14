@@ -1,1 +1,12 @@
-<h1>Tela de Login!</h1>
+{% extends "partials/home.html" %}
+
+{% block conteudo %}
+  <h1>Tela de Login!</h1>
+  <br><br>
+  <form method="POST">
+    {% csrf_token %}
+    <input type="email" name="user" id="">
+    <input type="password" name="password" id="">
+    <button type="submit">Entrar</button>
+  </form>
+{% endblock %}
