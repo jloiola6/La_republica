@@ -1,17 +1,17 @@
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
-from djstripe.models.api import APIKey
+# from djstripe.models.api import APIKey
 from django.http import JsonResponse
 from http.client import HTTPResponse
-from djstripe.models import Product
+# from djstripe.models import Product
 from django.conf import settings
-import djstripe
+# import djstripe
 import stripe
 import json
 
 from apps.usuario.views import verification
 from apps.usuario.models import Usuario
-from apps.clube.models import LinkPagamento
+# from apps.clube.models import LinkPagamento
 
 
 # Create your views here.
@@ -29,7 +29,7 @@ def index(request):
     #         print(link)
     #         print(link['url'])
     
-    links = LinkPagamento.objects.all()
+    # links = LinkPagamento.objects.all()
 
     # chave = settings.STRIPE_TEST_SECRET_KEY
 

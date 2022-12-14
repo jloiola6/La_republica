@@ -1,8 +1,8 @@
 from django.db import models
-from djstripe.models import Product
+# from djstripe.models import Product
 
 
-from apps.usuario.models import Usuario
+# from apps.usuario.models import Usuario
 
 # # Create your models here.
 
@@ -26,6 +26,6 @@ from apps.usuario.models import Usuario
     # class Meta:
     #     abstract = True
 
-class LinkPagamento(models.Model):
-    produto = models.ForeignKey(Product, null=True, blank=True,on_delete=models.SET_NULL)
-    link = models.CharField(max_length=500, blank= True, null= True)
+# class LinkPagamento(models.Model):
+#     produto = models.ForeignKey(Product, null=True, blank=True,on_delete=models.SET_NULL)
+#     link = models.CharField(max_length=500, blank= True, null= True)

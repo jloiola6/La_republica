@@ -1,6 +1,5 @@
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
-from djstripe.models import Product
 
 from apps.usuario.views import verification
 from apps.usuario.models import Usuario
