@@ -11,7 +11,7 @@ import json
 
 from apps.usuario.views import verification
 from apps.usuario.models import Usuario
-# from apps.clube.models import LinkPagamento
+from apps.clube.models import LinkPagamento
 
 
 # Create your views here.
@@ -22,12 +22,21 @@ def index(request):
 
     template_name = 'clube/index.html'
 
-    # stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
-    # for link in  stripe.PaymentLink.list():
-    #     # for produto in stripe.Product.retrieve(link['id']):
-    #     #     print(produto['id'])
-    #         print(link)
-    #         print(link['url'])
+    stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
+    produtos = []
+    for product in  stripe.Product.list():
+        for plan in stripe.Plan.list():
+            if plan['product'] == product['id']:
+                valor = plan['amount_decimal']
+                valor = f'{valor[:len(valor)-2]},{valor[-2:]}'
+                break
+        
+        link = LinkPagamento.objects.get(produto= product['id']).link
+        produtos.append({'name': product['name'],
+                'description': product['description'],
+                'valor': valor,
+                'link': link})
+
     
     # links = LinkPagamento.objects.all()
 

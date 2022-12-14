@@ -26,6 +26,6 @@ from django.db import models
     # class Meta:
     #     abstract = True
 
-# class LinkPagamento(models.Model):
-#     produto = models.ForeignKey(Product, null=True, blank=True,on_delete=models.SET_NULL)
-#     link = models.CharField(max_length=500, blank= True, null= True)
+class LinkPagamento(models.Model):
+    produto = models.CharField(max_length=50, blank= True, null= True)
+    link = models.CharField(max_length=500, blank= True, null= True)
