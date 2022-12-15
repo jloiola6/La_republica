@@ -5,31 +5,34 @@
 {% block titulo %}Cadastro{% endblock %}
 
 {% block conteudo %}
-  <main>
-    {% include "partials/_container-titulo-pagina.html" with titulo="Cadastro" %}
-    
-    <form id="formulario-login" class="surface" method="POST">
-      {% csrf_token %}
+    <main>
+        {% include "partials/_container-titulo-pagina.html" with titulo="Cadastro" %}
+        
+        <form id="formulario-login" class="surface" method="POST">
+            {% csrf_token %}
 
-      <div class="formulario-grupo">
-        <label for="campo-nome">Nome</label>
-        <input id="campo-nome" type="text" name="nome" maxlength="150" required>
-      </div>
+            <div class="formulario-grupo">
+                <label for="campo-nome">Nome</label>
+                <input id="campo-nome" type="text" name="nome" maxlength="150" minlength="10" required>
+            </div>
 
-      <div class="formulario-grupo">
-        <label for="campo-email">E-mail</label>
-        <input id="campo-email" type="email" name="user" maxlength="50" minlength="10" required>
-      </div>
+            <div class="formulario-grupo">
+                <label for="campo-email">E-mail</label>
+                <input id="campo-email" type="email" name="user" maxlength="50" minlength="10" required>
+            </div>
 
-      <div class="formulario-grupo">
-        <label for="campo-email">Senha</label>
-        <input id="campo-email" type="password" name="password" maxlength="15" minlength="8" required>
-      </div>
-      
-      <div class="container-botoes">
-        <button class="botao botao--azul" type="submit">Cadastrar</button>
-      </div>
-    </form>
+            <div class="formulario-grupo">
+                <label for="campo-email">Senha</label>
+                <input id="campo-email" type="password" name="password" maxlength="15" minlength="8" required>
+            </div>
+            
+            <div class="container-botoes">
+                <button class="botao botao--azul" type="submit">Cadastrar</button>
+            </div>
+        </form>
 
-  </main>
+        {% for campo in campos_invalidos %}
+            <label>{{ campo }}</label>
+        {% endfor %}
+    </main>
 {% endblock %}

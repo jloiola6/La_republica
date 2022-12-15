@@ -44,11 +44,11 @@ def cadastro(request):
         password = hashlib.md5(password.encode())
         password = password.hexdigest()
 
-        usuario = cadastrar_usuario(nome, user, password)
+        usuario, campos_invalidos = cadastrar_usuario(nome, user, password)
 
-        request.session['id'] = usuario.id
-
-        return HttpResponseRedirect('/')
+        if usuario:
+            request.session['id'] = usuario.id
+            return HttpResponseRedirect('/')
 
     return TemplateResponse(request, template_name, locals())
 
