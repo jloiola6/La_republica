@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.conf import settings
 import stripe
 
-from apps.usuario.components import verification, verificando_assinatura
+from apps.usuario.components import verification, verificando_assinatura, usuario_stripe
 from apps.usuario.models import Usuario
 from apps.clube.models import LinkPagamento
 
@@ -50,10 +50,13 @@ def perfil(request):
 def cancelar_assinatura(request):
     if not verification(request):
         return HttpResponseRedirect('/')
+    
+    usuario = Usuario.objects.get(id= request.session['id'])
+    stripe_id = usuario_stripe(usuario)
 
-    stripe_id = Usuario.objects.get(id= request.session['id']).stripe_id
     sub = list(stripe.Invoice.search(query=f"customer: '{stripe_id}'"))
     sub = sub[-1]['subscription']
+
     try:
         stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
         stripe.Subscription.delete(sub)

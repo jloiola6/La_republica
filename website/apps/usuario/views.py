@@ -28,6 +28,7 @@ def login(request):
 
     return TemplateResponse(request, template_name, locals())
 
+
 def cadastro(request):
     if verification(request):
         return HttpResponseRedirect('/')
@@ -49,6 +50,7 @@ def cadastro(request):
         return HttpResponseRedirect('/')
 
     return TemplateResponse(request, template_name, locals())
+
 
 def logout(request):
     try:

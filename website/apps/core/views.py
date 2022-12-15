@@ -11,7 +11,6 @@ from apps.core.models import *
 def index(request):
     if verification(request):
         usuario = Usuario.objects.get(id= request.session['id'])
-        clube = verificando_assinatura(usuario)
         
     template_name = 'index.html'
 
