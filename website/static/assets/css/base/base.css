@@ -3,6 +3,7 @@
 body{
     background-color: var(--cor-background);
     box-sizing: border-box;
+    padding-bottom: 5rem;
 }
 
 main{

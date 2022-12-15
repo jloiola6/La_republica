@@ -21,24 +21,32 @@ def login(request):
         password = hashlib.md5(password.encode())
         password = password.hexdigest()
         
-        if request.POST.get('entrar'):
-            if Usuario.objects.filter(email= user, senha= password).exists():
-                usuario = Usuario.objects.get(email= user, senha= password)
-                request.session['id'] = usuario.id
-                return HttpResponseRedirect('/')
-
-        elif request.POST.get('cadastrar'):
-            nome = request.POST.get('nome')
-            usuario = cadastrar_usuario(nome, user, password)
-
+        if Usuario.objects.filter(email= user, senha= password).exists():
+            usuario = Usuario.objects.get(email= user, senha= password)
             request.session['id'] = usuario.id
             return HttpResponseRedirect('/')
-
 
     return TemplateResponse(request, template_name, locals())
 
 def cadastro(request):
+    if verification(request):
+        return HttpResponseRedirect('/')
+        
     template_name = 'usuario/cadastro.html'
+
+    if request.method == 'POST':
+        nome = request.POST.get('nome')
+        user = request.POST.get('user')
+        password = request.POST.get('password')
+
+        password = hashlib.md5(password.encode())
+        password = password.hexdigest()
+
+        usuario = cadastrar_usuario(nome, user, password)
+
+        request.session['id'] = usuario.id
+
+        return HttpResponseRedirect('/')
 
     return TemplateResponse(request, template_name, locals())
 
@@ -49,3 +57,11 @@ def logout(request):
         pass
 
     return HttpResponseRedirect('/usuario/login')
+
+def perfil(request):
+    if verification(request):
+        usuario = Usuario.objects.get(id= request.session['id'])
+
+    template_name = 'usuario/perfil.html'
+
+    return TemplateResponse(request, template_name, locals())

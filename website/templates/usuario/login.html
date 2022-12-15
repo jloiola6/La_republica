@@ -17,8 +17,8 @@
       </div>
 
       <div class="formulario-grupo">
-        <label for="campo-email">Senha</label>
-        <input id="campo-email" type="password" name="password" required>
+        <label for="campo-senha">Senha</label>
+        <input id="campo-senha" type="password" name="password" required>
       </div>
       
       <div class="container-botoes">
@@ -28,16 +28,4 @@
 
     <p class="texto-medio texto-branco">Não possui uma conta? <b class="texto-verde"><a href="{% url 'usuario:cadastro' %}">Cadastre-se</a></b></p>
   </main>
-  
-  <h1>Tela de Login!</h1>
-  <br><br>
-  <form method="POST">
-    {% csrf_token %}
-    <input type="text" name="nome" placeholder="Nome">
-    <input type="email" name="user" id="">
-    <input type="password" name="password" id="">
-    <button type="submit" name='entrar' value='entrar'>Entrar</button>
-    <button type="submit" name='cadastrar' value='cadastrar'>Cadastrar</button>
-    <a href="">Esqueceu a senha</a>
-  </form>
 {% endblock %}

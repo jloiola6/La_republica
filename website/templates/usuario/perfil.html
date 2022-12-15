@@ -1,0 +1,16 @@
+{% extends "partials/_base.html" %}
+
+{% load static %}
+
+{% block titulo %}Meu Perfil{% endblock %}
+
+{% block conteudo %}
+  <main>
+    {% include "partials/_container-titulo-pagina.html" with titulo="Meu Perfil" %}
+    
+    <h2 class="texto-branco">{{ usuario.nome }}</h2>
+    <br>
+    <br>
+    <a href="{% url 'usuario:logout' %}" class="texto-branco">Sair</a>
+  </main>
+{% endblock %}

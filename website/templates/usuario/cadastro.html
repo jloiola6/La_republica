@@ -12,6 +12,11 @@
       {% csrf_token %}
 
       <div class="formulario-grupo">
+        <label for="campo-nome">Nome</label>
+        <input id="campo-nome" type="text" name="nome" required>
+      </div>
+
+      <div class="formulario-grupo">
         <label for="campo-email">E-mail</label>
         <input id="campo-email" type="email" name="user" required>
       </div>
@@ -22,10 +27,9 @@
       </div>
       
       <div class="container-botoes">
-        <button class="botao botao--azul" type="submit">Entrar</button>
+        <button class="botao botao--azul" type="submit">Cadastrar</button>
       </div>
     </form>
 
-    <p class="texto-medio texto-branco">Não possui uma conta? <b class="texto-verde"><a href="#">Cadastre-se</a></b></p>
   </main>
 {% endblock %}
