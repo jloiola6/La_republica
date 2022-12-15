@@ -1,13 +1,22 @@
 from django.template.response import TemplateResponse
 from django.http import HttpResponseRedirect
-import hashlib
 
 from apps.usuario.models import *
-from apps.usuario.action import cadastrar_usuario
+from apps.usuario.action import *
 from apps.usuario.components import verification
 from apps.clube.components import *
 
 # Create your views here.admin   
+
+
+def logout(request):
+    try:
+        del request.session['id']
+    except KeyError:
+        pass
+
+    return HttpResponseRedirect('/usuario/login')
+
 
 def login(request):
     if verification(request):
@@ -37,14 +46,7 @@ def cadastro(request):
     template_name = 'usuario/cadastro.html'
 
     if request.method == 'POST':
-        nome = request.POST.get('nome')
-        user = request.POST.get('user')
-        password = request.POST.get('password')
-
-        password = hashlib.md5(password.encode())
-        password = password.hexdigest()
-
-        usuario, campos_invalidos = cadastrar_usuario(nome, user, password)
+        usuario, campos_invalidos = cadastrar_usuario(request)
 
         if usuario:
             request.session['id'] = usuario.id
@@ -53,18 +55,31 @@ def cadastro(request):
     return TemplateResponse(request, template_name, locals())
 
 
-def logout(request):
-    try:
-        del request.session['id']
-    except KeyError:
-        pass
-
-    return HttpResponseRedirect('/usuario/login')
-
 def perfil(request):
     if verification(request):
         usuario = Usuario.objects.get(id= request.session['id'])
 
     template_name = 'usuario/perfil.html'
+
+    return TemplateResponse(request, template_name, locals())
+
+
+def associar_colaborador(request):
+    if verification(request):
+        usuario = Usuario.objects.get(id= request.session['id'])
+        if not Adm.objects.filter(usuario= usuario).exists():
+            return HttpResponseRedirect('/')
+
+
+    template_name = 'usuario/associar_colaborador.html'
+
+    colabores = Colaborador.objects.values_list('usuario__id', flat= True)
+    adms = Adm.objects.values_list('usuario__id', flat= True)
+    usuarios = Usuario.objects.exclude(id__in= colabores).exclude(id__in= adms)
+
+    if request.method == 'POST':
+        colaborador_associar(request)
+
+        return HttpResponseRedirect('/usuario/perfil')
 
     return TemplateResponse(request, template_name, locals())

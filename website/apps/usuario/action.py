@@ -1,6 +1,15 @@
-from apps.usuario.models import Usuario
+import hashlib
 
-def cadastrar_usuario(nome, user, password):
+from apps.usuario.models import *
+
+def cadastrar_usuario(request):
+    nome = request.POST.get('nome')
+    user = request.POST.get('user')
+    password = request.POST.get('password')
+
+    password = hashlib.md5(password.encode())
+    password = password.hexdigest()
+
     usuario = None
     campos_invalidos = []
 
@@ -21,3 +30,15 @@ def cadastrar_usuario(nome, user, password):
         usuario.save()
     
     return usuario, campos_invalidos
+
+
+def colaborador_associar(request):
+    colaborador = request.POST.get('colaborador')
+
+    if Usuario.objects.filter(id= colaborador).exists():
+        usuario = Usuario.objects.get(id= colaborador)
+        
+        if not Colaborador.objects.filter(usuario= usuario).exists():
+            colaborador = Colaborador()
+            colaborador.usuario = usuario
+            colaborador.save()

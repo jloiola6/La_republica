@@ -6,7 +6,8 @@ app_name = 'usuario'
 
 urlpatterns = [
     path('login', login, name='login'),
+    path('logout', logout, name='logout'),
     path('cadastro', cadastro, name='cadastro'),
     path('perfil', perfil, name='perfil'),
-    path('logout', logout, name='logout'),
+    path('associar-colaborador', associar_colaborador, name='associar-colaborador'),
 ]
