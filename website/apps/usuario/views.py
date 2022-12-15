@@ -4,7 +4,8 @@ import hashlib
 
 from apps.usuario.models import *
 from apps.usuario.action import cadastrar_usuario
-from apps.usuario.components import *
+from apps.usuario.components import verification
+from apps.clube.components import *
 
 # Create your views here.admin   
 

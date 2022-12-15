@@ -4,9 +4,10 @@ from django.http import JsonResponse
 from django.conf import settings
 import stripe
 
-from apps.usuario.components import verification, verificando_assinatura, usuario_stripe
-from apps.usuario.models import Usuario
+from apps.usuario.components import verification
 from apps.clube.models import LinkPagamento
+from apps.usuario.models import Usuario
+from apps.clube.components import *
 
 
 # Create your views here.

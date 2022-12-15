@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 
-from apps.usuario.components import verification, verificando_assinatura
+from apps.usuario.components import verification
 from apps.usuario.models import Usuario
 from apps.core.models import *
 
