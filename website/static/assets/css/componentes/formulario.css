@@ -1,0 +1,29 @@
+/* Estilização de formulários */
+
+.formulario-grupo{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    margin-top: 1rem;
+}
+
+input[type="hidden"] + .formulario-grupo{
+    margin-top: 0;
+}
+
+label{
+    color: #FFFFFF;
+    font-weight: 500;
+}
+
+input{
+    background-color: transparent;
+    border: 1px solid #FFFFFF;
+    border-radius: 0.5rem;
+    color: #FFFFFF;
+    height: 2.5rem;
+    font-size: 1rem;
+    font-weight: 400;
+    outline: 0;
+    padding-inline: .5rem;
+}

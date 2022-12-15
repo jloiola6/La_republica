@@ -1,0 +1,14 @@
+/* Definição das cores */
+
+html{
+    --cor-azul: #1A53A9;
+    --cor-verde: #1AA97E;
+
+    --cor-background: #1A1A1A;
+    --cor-surface: #333333;
+
+    --cor-texto-branco: #FFFFFF;
+    --cor-texto-verde: #1AA97E;
+
+    --cor-icone-branco: #FFFFFF;
+}

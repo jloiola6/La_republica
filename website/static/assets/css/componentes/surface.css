@@ -1,0 +1,13 @@
+/* Estilização das surfaces */
+
+.surface{
+    background-color: var(--cor-surface);
+    border-radius: 1rem;
+    box-sizing: border-box;
+    margin-top: 1rem;
+    padding: 1rem;
+}
+
+.surface + *{
+    margin-top: 1rem;
+}

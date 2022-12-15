@@ -1,0 +1,11 @@
+/* Estilizações gerais */
+
+body{
+    background-color: var(--cor-background);
+    box-sizing: border-box;
+}
+
+main{
+    padding: 1rem;
+    text-align: center;
+}

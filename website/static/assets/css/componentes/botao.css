@@ -1,0 +1,26 @@
+/* Estilização dos botões */
+
+.container-botoes{
+    margin-top: 1rem;
+}
+
+.botao{
+    border: none;
+    border-radius: .5rem;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    padding-block: .5rem;
+    transition: .5s;
+    width: 100%;
+}
+
+
+    .botao--azul{
+        background-color: #1A53A9;
+    }
+
+    .botao--azul:hover{
+        background-color: #2669ce;
+    }

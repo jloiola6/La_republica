@@ -2,11 +2,11 @@
 
 {% load static %}
 
-{% block titulo %}Login{% endblock %}
+{% block titulo %}Cadastro{% endblock %}
 
 {% block conteudo %}
   <main>
-    {% include "partials/_container-titulo-pagina.html" with titulo="Login" %}
+    {% include "partials/_container-titulo-pagina.html" with titulo="Cadastro" %}
     
     <form id="formulario-login" class="surface" method="POST">
       {% csrf_token %}
@@ -26,6 +26,6 @@
       </div>
     </form>
 
-    <p class="texto-medio texto-branco">Não possui uma conta? <b class="texto-verde"><a href="{% url 'usuario:cadastro' %}">Cadastre-se</a></b></p>
+    <p class="texto-medio texto-branco">Não possui uma conta? <b class="texto-verde"><a href="#">Cadastre-se</a></b></p>
   </main>
 {% endblock %}

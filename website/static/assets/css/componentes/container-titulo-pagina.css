@@ -1,0 +1,11 @@
+/* Estilização do container que carrega o título da página e a logo */
+
+.container-titulo-pagina{
+    display: flex;
+    justify-content: space-between;
+}
+
+.titulo-logo{
+    height: 1.5rem;
+    width: auto;
+}

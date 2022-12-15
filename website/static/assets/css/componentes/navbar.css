@@ -1,0 +1,40 @@
+/* Estilização da Barra de Navegação */
+
+.container-navegacao, .navegacao__menu, .navegacao__link{
+    display: flex;
+}
+
+.container-navegacao{
+    align-items: center;
+    background-color: var(--cor-surface);
+    bottom: 0;
+    box-sizing: border-box;
+    height: 5rem;
+    padding-inline: 1rem;
+    position: fixed;
+    width: 100%;
+}
+    
+    .navegacao__menu, .navegacao__item{
+        flex-basis: 100%;
+    }
+
+    .navegacao__link{
+        align-items: center;
+        flex-direction: column;
+        gap: .25rem;
+    }
+        
+        .navegacao__icone{
+            aspect-ratio: 1;
+            width: 2rem;
+        }
+
+        .navegacao__icone path{
+            fill: var(--cor-icone-branco);
+        }
+
+        .navegacao__label{
+            color: var(--cor-texto-branco);
+            font-size: 0.75rem;
+        }

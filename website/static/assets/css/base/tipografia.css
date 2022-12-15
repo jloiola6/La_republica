@@ -1,0 +1,33 @@
+/* Estilização da tipografia */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+
+body, body *{
+    font-family: 'Poppins', sans-serif;
+}
+
+.titulo-pagina{
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase ;
+}
+
+.texto-normal{
+    font-weight: 400;
+}
+
+.texto-medio{
+    font-weight: 500;
+}
+
+.texto-negrito, b{
+    font-weight: 600;
+}
+
+.texto-branco{
+    color: var(--cor-texto-branco);
+}
+
+.texto-verde{
+    color: var(--cor-texto-verde)
+}
