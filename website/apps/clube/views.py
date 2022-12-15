@@ -1,15 +1,10 @@
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
-# from djstripe.models.api import APIKey
 from django.http import JsonResponse
-from http.client import HTTPResponse
-# from djstripe.models import Product
 from django.conf import settings
-# import djstripe
 import stripe
-import json
 
-from apps.usuario.views import verification
+from apps.usuario.components import verification, verificando_assinatura
 from apps.usuario.models import Usuario
 from apps.clube.models import LinkPagamento
 
@@ -19,35 +14,53 @@ from apps.clube.models import LinkPagamento
 def index(request):
     if verification(request):
         usuario = Usuario.objects.get(id= request.session['id'])
+        if verificando_assinatura(usuario):
+            return HttpResponseRedirect('/clube/perfil')
 
     template_name = 'clube/index.html'
 
-    stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
     produtos = []
-    for product in  stripe.Product.list():
-        for plan in stripe.Plan.list():
-            if plan['product'] == product['id']:
-                valor = plan['amount_decimal']
-                valor = f'{valor[:len(valor)-2]},{valor[-2:]}'
-                break
-        
+    stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
+    for plan in stripe.Plan.list():
+        product = stripe.Product.retrieve(plan['product'])
+        valor = plan['amount_decimal']
+        valor = f'{valor[:len(valor)-2]},{valor[-2:]}'        
         link = LinkPagamento.objects.get(produto= product['id']).link
+        
         produtos.append({'name': product['name'],
                 'description': product['description'],
                 'valor': valor,
                 'link': link})
-
     
-    # links = LinkPagamento.objects.all()
-
-    # chave = settings.STRIPE_TEST_SECRET_KEY
-
-    # stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
-    # valores = stripe.Customer.search(
-    #     query="email:'jloiola6@outoook.com' or phone:'+55 68 99902 1108'",
-    # )
-
     return TemplateResponse(request, template_name, locals())
+
+
+def perfil(request):
+    if not verification(request):
+        return HttpResponseRedirect('/')
+
+    template_name = 'clube/perfil.html'
+
+    usuario = Usuario.objects.get(id= request.session['id'])
+    clube = verificando_assinatura(usuario)
+    
+    return TemplateResponse(request, template_name, locals())
+
+
+def cancelar_assinatura(request):
+    if not verification(request):
+        return HttpResponseRedirect('/')
+
+    stripe_id = Usuario.objects.get(id= request.session['id']).stripe_id
+    sub = list(stripe.Invoice.search(query=f"customer: '{stripe_id}'"))
+    sub = sub[-1]['subscription']
+    try:
+        stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
+        stripe.Subscription.delete(sub)
+    except Exception as e:
+        return JsonResponse({'error': (e.args[0])}, status =403)
+
+    return HttpResponseRedirect('/')
 
 
 # def checkout(request):

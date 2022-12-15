@@ -18,7 +18,12 @@
     <a href="{% url 'usuario:login' %}"><button>Entrar</button></a>
     {% endif %}
     
-    <a href="{% url 'clube:index' %}"><button>Clube</button></a>
+    {% if clube %}
+        <a href="{% url 'clube:index' %}"><button>Meu Clube</button></a>
+    {% else %}
+        <a href="{% url 'clube:index' %}"><button>Clube</button></a>
+    {% endif %}
+
     <a href="{% url 'core:index' %}"><button>Home</button></a>
     <a href="{% url 'core:index' %}"><button>Perfil</button></a>
     <a href="{% url 'core:index' %}"><button>Administrador</button></a>
