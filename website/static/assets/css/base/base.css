@@ -3,10 +3,12 @@
 body{
     background-color: var(--cor-background);
     box-sizing: border-box;
-    padding-bottom: 5rem;
+    padding-bottom: 4rem;
 }
 
 main{
-    padding: 1rem;
+    box-sizing: border-box;
+    padding-block: 2rem;
+    padding-inline: 1rem;
     text-align: center;
 }
