@@ -10,4 +10,5 @@ urlpatterns = [
     path('cadastro', cadastro, name='cadastro'),
     path('perfil', perfil, name='perfil'),
     path('associar-colaborador', associar_colaborador, name='associar-colaborador'),
+    path('servico-colaborador', servico_colaborador, name='servico-colaborador'),
 ]

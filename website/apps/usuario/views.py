@@ -1,6 +1,7 @@
 from django.template.response import TemplateResponse
 from django.http import HttpResponseRedirect
 
+from apps.agendamento.models import *
 from apps.usuario.models import *
 from apps.usuario.action import *
 from apps.usuario.components import verification
@@ -70,7 +71,6 @@ def associar_colaborador(request):
         if not Adm.objects.filter(usuario= usuario).exists():
             return HttpResponseRedirect('/')
 
-
     template_name = 'usuario/associar_colaborador.html'
 
     colabores = Colaborador.objects.values_list('usuario__id', flat= True)
@@ -79,6 +79,25 @@ def associar_colaborador(request):
 
     if request.method == 'POST':
         colaborador_associar(request)
+
+        return HttpResponseRedirect('/usuario/perfil')
+
+    return TemplateResponse(request, template_name, locals())
+
+
+def servico_colaborador(request):
+    if verification(request):
+        usuario = Usuario.objects.get(id= request.session['id'])
+        if not Adm.objects.filter(usuario= usuario).exists():
+            return HttpResponseRedirect('/')
+
+    template_name = 'usuario/servico_colaborador.html'
+
+    colaboradores = Colaborador.objects.all()
+    servicos = Servico.objects.all()
+
+    if request.method == 'POST':
+        colaborador_servico_associar(request)
 
         return HttpResponseRedirect('/usuario/perfil')
 

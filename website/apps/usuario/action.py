@@ -1,6 +1,7 @@
 import hashlib
 
 from apps.usuario.models import *
+from apps.agendamento.models import *
 
 def cadastrar_usuario(request):
     nome = request.POST.get('nome')
@@ -42,3 +43,18 @@ def colaborador_associar(request):
             colaborador = Colaborador()
             colaborador.usuario = usuario
             colaborador.save()
+
+
+def colaborador_servico_associar(request):
+    colaborador = request.POST.get('colaborador')
+    servico = request.POST.get('servico')
+
+    if Colaborador.objects.filter(id= colaborador).exists() and Servico.objects.filter(id= servico).exists():
+        colaborador = Colaborador.objects.get(id= colaborador)
+        servico = Servico.objects.get(id= servico)
+
+        if not ColaboradorServico.objects.filter(colaborador= colaborador, servico= servico).exists():
+            colaborador_servico = ColaboradorServico()
+            colaborador_servico.colaborador = colaborador
+            colaborador_servico.servico = servico
+            colaborador_servico.save()
