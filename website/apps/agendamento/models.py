@@ -1,6 +1,7 @@
+from django.contrib.auth.models import User
 from django.db import models
 
-from apps.usuario.models import Usuario, Colaborador
+from apps.usuario.models import Colaborador
 
 # Create your models here.
 
@@ -26,7 +27,7 @@ class PrecoServico(models.Model):
 
 
 class Agendamento(models.Model):
-    cliente = models.ForeignKey(Usuario, on_delete=models.DO_NOTHING)
+    cliente = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     colaborador = models.ForeignKey(Colaborador, on_delete=models.DO_NOTHING)
     servico = models.ForeignKey(PrecoServico, on_delete=models.DO_NOTHING)
     data = models.DateField()

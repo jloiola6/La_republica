@@ -1,12 +1,12 @@
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
+from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.conf import settings
 import stripe
 
 from apps.usuario.components import verification
 from apps.clube.models import LinkPagamento
-from apps.usuario.models import Usuario
 from apps.clube.components import *
 
 
@@ -14,7 +14,7 @@ from apps.clube.components import *
 
 def index(request):
     if verification(request):
-        usuario = Usuario.objects.get(id= request.session['id'])
+        usuario = User.objects.get(id= request.session['id'])
         if verificando_assinatura(usuario):
             return HttpResponseRedirect('/clube/perfil')
 
@@ -42,7 +42,7 @@ def perfil(request):
 
     template_name = 'clube/perfil.html'
 
-    usuario = Usuario.objects.get(id= request.session['id'])
+    usuario = User.objects.get(id= request.session['id'])
     clube = verificando_assinatura(usuario)
     
     return TemplateResponse(request, template_name, locals())
@@ -52,7 +52,7 @@ def cancelar_assinatura(request):
     if not verification(request):
         return HttpResponseRedirect('/')
     
-    usuario = Usuario.objects.get(id= request.session['id'])
+    usuario = User.objects.get(id= request.session['id'])
     stripe_id = usuario_stripe(usuario)
 
     sub = list(stripe.Invoice.search(query=f"customer: '{stripe_id}'"))
@@ -71,7 +71,7 @@ def cancelar_assinatura(request):
 #     if not verification(request):
 #         return HttpResponseRedirect('/')
 
-#     usuario = Usuario.objects.get(id= request.session['id'])
+#     usuario = User.objects.get(id= request.session['id'])
 #     print('0')
 #     if request.method == 'POST':
 #         # Reads application/json and returns a response

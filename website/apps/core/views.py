@@ -1,8 +1,8 @@
-from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
+from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
 
 from apps.usuario.components import verification
-from apps.usuario.models import Usuario
 from apps.core.models import *
 
 
@@ -10,7 +10,7 @@ from apps.core.models import *
 
 def index(request):
     if verification(request):
-        usuario = Usuario.objects.get(id= request.session['id'])
+        usuario = User.objects.get(id= request.session['id'])
         
     template_name = 'index.html'
 

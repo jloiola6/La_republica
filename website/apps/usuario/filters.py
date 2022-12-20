@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.conf import settings
 import stripe
 
@@ -9,8 +11,8 @@ def filtros_usuarios(request):
     nome = request.GET.get('nome')
     tipo = request.GET.get('tipo')
 
-    
-    usuarios = Usuario.objects.all()
+    usuarios = User.objects.all()
+    print(usuarios)
     if not verificador_vazio(tipo):
         if tipo == 'C':
             usuarios = Colaborador.objects.all()
@@ -36,6 +38,6 @@ def filtros_usuarios(request):
             usuarios = Adm.objects.all()
 
     if not verificador_vazio(nome):
-        usuarios = usuarios.filter(nome__contains= nome)
+        usuarios = usuarios.filter(username__contains= nome)
 
     return usuarios

@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 import hashlib
 
 from apps.usuario.models import *
@@ -22,12 +23,12 @@ def cadastrar_usuario(request):
 
     if 15 > len(password) < 150:
         campos_invalidos.append('Password')
-
-    if not Usuario.objects.filter(email= user, senha= password).exists() and campos_invalidos == []:
-        usuario = Usuario()
-        usuario.nome = nome
+    
+    if not User.objects.filter(email= user, password= password).exists() and campos_invalidos == []:
+        usuario = User()
+        usuario.username = nome
         usuario.email = user
-        usuario.senha = password
+        usuario.password = password
         usuario.save()
     
     return usuario, campos_invalidos

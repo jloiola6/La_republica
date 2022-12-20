@@ -1,5 +1,9 @@
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.views import PasswordResetView
 from django.template.response import TemplateResponse
 from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
+from django.urls import reverse_lazy
 
 from apps.agendamento.models import *
 from apps.usuario.models import *
@@ -33,8 +37,8 @@ def login(request):
         password = hashlib.md5(password.encode())
         password = password.hexdigest()
         
-        if Usuario.objects.filter(email= user, senha= password).exists():
-            usuario = Usuario.objects.get(email= user, senha= password)
+        if User.objects.filter(email= user, password= password).exists():
+            usuario = User.objects.get(email= user, password= password)
             request.session['id'] = usuario.id
             return HttpResponseRedirect('/')
 
@@ -57,9 +61,20 @@ def cadastro(request):
     return TemplateResponse(request, template_name, locals())
 
 
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = 'usuario/resetar-senha.html'
+    email_template_name = 'usuario/resetar-senha-email.html'
+    subject_template_name = 'usuario/resetar-senha-assunto.html'
+    success_message = "We've emailed you instructions for setting your password, " \
+                      "if an account exists with the email you entered. You should receive them shortly." \
+                      " If you don't receive an email, " \
+                      "please make sure you've entered the address you registered with, and check your spam folder."
+    success_url = reverse_lazy('usuario:login')
+
+
 def perfil(request):
     if verification(request):
-        usuario = Usuario.objects.get(id= request.session['id'])
+        usuario = User.objects.get(id= request.session['id'])
 
     template_name = 'usuario/perfil.html'
 
@@ -68,7 +83,7 @@ def perfil(request):
 
 def associar_colaborador(request):
     if verification(request):
-        usuario = Usuario.objects.get(id= request.session['id'])
+        usuario = User.objects.get(id= request.session['id'])
         if not Adm.objects.filter(usuario= usuario).exists():
             return HttpResponseRedirect('/')
 
@@ -76,7 +91,7 @@ def associar_colaborador(request):
 
     colabores = Colaborador.objects.values_list('usuario__id', flat= True)
     adms = Adm.objects.values_list('usuario__id', flat= True)
-    usuarios = Usuario.objects.exclude(id__in= colabores).exclude(id__in= adms)
+    usuarios = User.objects.exclude(id__in= colabores).exclude(id__in= adms)
 
     if request.method == 'POST':
         colaborador_associar(request)
@@ -88,7 +103,7 @@ def associar_colaborador(request):
 
 def servico_colaborador(request):
     if verification(request):
-        usuario = Usuario.objects.get(id= request.session['id'])
+        usuario = User.objects.get(id= request.session['id'])
         if not Adm.objects.filter(usuario= usuario).exists():
             return HttpResponseRedirect('/')
 
@@ -107,14 +122,14 @@ def servico_colaborador(request):
 
 def associar_adm(request):
     if verification(request):
-        usuario = Usuario.objects.get(id= request.session['id'])
+        usuario = User.objects.get(id= request.session['id'])
         if not Adm.objects.filter(usuario= usuario).exists():
             return HttpResponseRedirect('/')
 
     template_name = 'usuario/associar-adm.html'
 
     adms = Adm.objects.values_list('usuario__id', flat= True)
-    usuarios = Usuario.objects.exclude(id__in= adms)
+    usuarios = User.objects.exclude(id__in= adms).exclude(is_superuser= 1)
 
     if request.method == 'POST':
         adm_associar(request)
@@ -126,7 +141,7 @@ def associar_adm(request):
 
 def usuarios(request):
     if verification(request):
-        usuario = Usuario.objects.get(id= request.session['id'])
+        usuario = User.objects.get(id= request.session['id'])
         if not Adm.objects.filter(usuario= usuario).exists():
             return HttpResponseRedirect('/')
 

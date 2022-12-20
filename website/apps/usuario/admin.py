@@ -4,12 +4,12 @@ from apps.usuario.models import *
 
 # Register your models here.
 
-class UsuarioAdmin(admin.ModelAdmin):
+# class UsuarioAdmin(admin.ModelAdmin):
 
-    list_display = ('nome', 'email', 'senha')
-    search_fields = ['nome', 'email', 'senha']
+#     list_display = ('nome', 'email', 'senha')
+#     search_fields = ['nome', 'email', 'senha']
 
-admin.site.register(Usuario, UsuarioAdmin)
+# admin.site.register(User, UsuarioAdmin)
 
 
 class AdmAdmin(admin.ModelAdmin):
