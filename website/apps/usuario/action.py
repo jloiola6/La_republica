@@ -58,3 +58,15 @@ def colaborador_servico_associar(request):
             colaborador_servico.colaborador = colaborador
             colaborador_servico.servico = servico
             colaborador_servico.save()
+
+
+def adm_associar(request):
+    usuario = request.POST.get('usuario')
+
+    if Usuario.objects.filter(id= usuario).exists():
+        usuario = Usuario.objects.get(id= usuario)
+        
+        if not Adm.objects.filter(usuario= usuario).exists():
+            adm = Adm()
+            adm.usuario = usuario
+            adm.save()

@@ -1,0 +1,22 @@
+{% extends "partials/_base.html" %}
+
+{% load static %}
+
+{% block titulo %}Meu Perfil{% endblock %}
+
+{% block conteudo %}
+    <main>
+        {% include "partials/_container-titulo-pagina.html" with titulo="Associar administrador" %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <select name="usuario" id="">
+                {% for usuario in usuarios %}
+                    <option value="{{ usuario.id }}">{{ usuario.nome }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Associar novo colaborador</button>
+        </form>
+    </main>
+{% endblock %}

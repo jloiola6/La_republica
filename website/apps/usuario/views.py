@@ -102,3 +102,22 @@ def servico_colaborador(request):
         return HttpResponseRedirect('/usuario/perfil')
 
     return TemplateResponse(request, template_name, locals())
+
+
+def associar_adm(request):
+    if verification(request):
+        usuario = Usuario.objects.get(id= request.session['id'])
+        if not Adm.objects.filter(usuario= usuario).exists():
+            return HttpResponseRedirect('/')
+
+    template_name = 'usuario/associar_adm.html'
+
+    adms = Adm.objects.values_list('usuario__id', flat= True)
+    usuarios = Usuario.objects.exclude(id__in= adms)
+
+    if request.method == 'POST':
+        adm_associar(request)
+
+        return HttpResponseRedirect('/usuario/perfil')
+
+    return TemplateResponse(request, template_name, locals())
