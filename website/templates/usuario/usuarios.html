@@ -1,0 +1,28 @@
+{% extends "partials/_base.html" %}
+
+{% load static %}
+
+{% block titulo %}Meu Perfil{% endblock %}
+
+{% block conteudo %}
+    <main>
+        {% include "partials/_container-titulo-pagina.html" with titulo="Lista de usuários" %}
+
+        <form method="GET">
+            <input type="text" placeholder="Nome" name='nome'>
+            <select name="tipo" id="">
+                <option value="T">Todos</option>
+                <option value="C">Colaboradores</option>
+                <option value="A">Assinantes</option>
+                <option value="Adm">Administradores</option>
+            </select>
+
+        </form>
+
+        {% for usuario in usuarios %}
+            <br>
+            <a href="#" class="texto-branco">{{ usuario }}</a>
+        {% endfor %}
+
+    </main>
+{% endblock %}
