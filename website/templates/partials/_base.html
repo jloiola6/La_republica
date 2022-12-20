@@ -11,6 +11,10 @@
 
         <title>{% block titulo %}{% endblock %} | La Republica</title>
 
+        <meta http-equiv='cache-control' content='no-cache'>
+        <meta http-equiv='expires' content='0'>
+        <meta http-equiv='pragma' content='no-cache'>
+
         <link rel="icon" href="{% static 'assets/img/icone-aba.png' %}">
 
         <!-- Estilizações gerais -->
@@ -28,9 +32,10 @@
     </head>
 
     <body>
-        {% block conteudo %}
-        {% endblock %}
+        {% block conteudo %}{% endblock %}
 
         {% include "partials/_navbar.html" %}
+
+       
     </body>
 </html>
