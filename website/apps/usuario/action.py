@@ -1,16 +1,13 @@
 from django.contrib.auth.models import User
-import hashlib
 
-from apps.usuario.models import *
-from apps.agendamento.models import *
 
 def cadastrar_usuario(request):
     nome = request.POST.get('nome')
-    user = request.POST.get('user')
+    email = request.POST.get('email')
     password = request.POST.get('password')
-
-    password = hashlib.md5(password.encode())
-    password = password.hexdigest()
+    
+    # password = hashlib.md5(password.encode())
+    # password = password.hexdigest()
 
     usuario = None
     campos_invalidos = []
@@ -18,17 +15,19 @@ def cadastrar_usuario(request):
     if 10 > len(nome) < 150:
         campos_invalidos.append('Nome')
 
-    if 10 > len(user) < 50 and '@' in user and '.' in user:
+    if 10 > len(email) < 50 and '@' in email and '.' in email:
         campos_invalidos.append('Email')
 
     if 15 > len(password) < 150:
         campos_invalidos.append('Password')
     
-    if not User.objects.filter(email= user, password= password).exists() and campos_invalidos == []:
-        usuario = User()
-        usuario.username = nome
-        usuario.email = user
-        usuario.password = password
+    if not User.objects.filter(email= email, password= password).exists():
+        usuario = User.objects.create_user(
+            username= email,
+            first_name = nome,
+            email = email,
+            password = password
+        )
         usuario.save()
     
     return usuario, campos_invalidos

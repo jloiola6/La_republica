@@ -9,8 +9,8 @@ from apps.core.models import *
 # Create your views here.
 
 def index(request):
-    if verification(request):
-        usuario = User.objects.get(id= request.session['id'])
+    if request.user.is_authenticated:
+        usuario = request.user
         
     template_name = 'index.html'
 

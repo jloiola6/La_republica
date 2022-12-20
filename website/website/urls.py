@@ -21,7 +21,6 @@ urlpatterns = [
 
     path('', include('apps.core.urls')),
     path('usuario/', include('apps.usuario.urls')),
+    # path('usuario/', include('django.contrib.auth.urls')),
     path('clube/', include('apps.clube.urls')),
-
-    # path('social-auth/', include('social_django.urls', namespace='social-auth')),
 ]

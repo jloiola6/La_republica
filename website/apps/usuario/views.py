@@ -1,91 +1,83 @@
+from django.contrib.auth import login as login_django
+from django.contrib.auth import logout as logout_django
+from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.views import PasswordResetView
-from django.template.response import TemplateResponse
-from django.http import HttpResponseRedirect
-from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 
-from apps.agendamento.models import *
-from apps.usuario.models import *
-from apps.usuario.action import *
+from django.template.response import TemplateResponse
+from django.http import HttpResponseRedirect
+
 from apps.usuario.filters import *
-from apps.usuario.components import verification
+from apps.usuario.action import *
+from apps.agendamento.models import *
 from apps.clube.components import *
 
-# Create your views here.admin   
-
-
-def logout(request):
-    try:
-        del request.session['id']
-    except KeyError:
-        pass
-
-    return HttpResponseRedirect('/usuario/login')
-
-
-def login(request):
-    if verification(request):
-        return HttpResponseRedirect('/')
-
-    template_name = 'usuario/login.html'
-    
-    if request.method == 'POST':
-        user = request.POST.get('user')
-        password = request.POST.get('password')
-
-        password = hashlib.md5(password.encode())
-        password = password.hexdigest()
-        
-        if User.objects.filter(email= user, password= password).exists():
-            usuario = User.objects.get(email= user, password= password)
-            request.session['id'] = usuario.id
-            return HttpResponseRedirect('/')
-
-    return TemplateResponse(request, template_name, locals())
-
-
-def cadastro(request):
-    if verification(request):
-        return HttpResponseRedirect('/')
-        
-    template_name = 'usuario/cadastro.html'
-
-    if request.method == 'POST':
-        usuario, campos_invalidos = cadastrar_usuario(request)
-
-        if usuario:
-            request.session['id'] = usuario.id
-            return HttpResponseRedirect('/')
-
-    return TemplateResponse(request, template_name, locals())
-
+# Create your views here.
 
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
-    template_name = 'usuario/resetar-senha.html'
-    email_template_name = 'usuario/resetar-senha-email.html'
-    subject_template_name = 'usuario/resetar-senha-assunto.html'
+    template_name = 'usuario/resetar-senha/resetar-senha.html'
+    email_template_name = 'usuario/resetar-senha/email-texto.html'
+    subject_template_name = 'usuario/resetar-senha/email-assunto.txt'
     success_message = "We've emailed you instructions for setting your password, " \
                       "if an account exists with the email you entered. You should receive them shortly." \
                       " If you don't receive an email, " \
                       "please make sure you've entered the address you registered with, and check your spam folder."
     success_url = reverse_lazy('usuario:login')
 
+def logout(request):
+    logout_django(request)
+    return HttpResponseRedirect('/usuario/login')
+
+
+def cadastro(request):
+    template_name = 'usuario/cadastro.html'
+
+    if request.method == 'POST':
+        usuario, campos_invalidos = cadastrar_usuario(request)
+
+        if usuario:
+            login_django(request, usuario)
+        else:
+            print(campos_invalidos)
+            
+
+    return TemplateResponse(request, template_name, locals())
+
+
+def login(request):
+    template_name = 'usuario/login.html'
+
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        usuario = authenticate(username= email, password= password)
+        if usuario:
+            login_django(request, usuario)
+            return HttpResponseRedirect('/')
+        else:
+            erro = 'Email ou senha inválido'
+
+    return TemplateResponse(request, template_name, locals())
+
 
 def perfil(request):
-    if verification(request):
-        usuario = User.objects.get(id= request.session['id'])
+    if request.user.is_authenticated:
+        usuario = request.user
 
     template_name = 'usuario/perfil.html'
 
     return TemplateResponse(request, template_name, locals())
 
 
+@login_required(login_url='/usuario/login')
 def associar_colaborador(request):
-    if verification(request):
-        usuario = User.objects.get(id= request.session['id'])
-        if not Adm.objects.filter(usuario= usuario).exists():
-            return HttpResponseRedirect('/')
+    usuario = request.user
+    if not Adm.objects.filter(usuario= usuario).exists():
+        return HttpResponseRedirect('/')
 
     template_name = 'usuario/associar-colaborador.html'
 
@@ -101,11 +93,11 @@ def associar_colaborador(request):
     return TemplateResponse(request, template_name, locals())
 
 
+@login_required(login_url='/usuario/login')
 def servico_colaborador(request):
-    if verification(request):
-        usuario = User.objects.get(id= request.session['id'])
-        if not Adm.objects.filter(usuario= usuario).exists():
-            return HttpResponseRedirect('/')
+    usuario = request.user
+    if not Adm.objects.filter(usuario= usuario).exists():
+        return HttpResponseRedirect('/')
 
     template_name = 'usuario/servico-colaborador.html'
 
@@ -120,11 +112,11 @@ def servico_colaborador(request):
     return TemplateResponse(request, template_name, locals())
 
 
+@login_required(login_url='/usuario/login')
 def associar_adm(request):
-    if verification(request):
-        usuario = User.objects.get(id= request.session['id'])
-        if not Adm.objects.filter(usuario= usuario).exists():
-            return HttpResponseRedirect('/')
+    usuario = request.user
+    if not Adm.objects.filter(usuario= usuario).exists():
+        return HttpResponseRedirect('/')
 
     template_name = 'usuario/associar-adm.html'
 
@@ -139,14 +131,15 @@ def associar_adm(request):
     return TemplateResponse(request, template_name, locals())
 
 
+@login_required(login_url='/usuario/login')
 def usuarios(request):
-    if verification(request):
-        usuario = User.objects.get(id= request.session['id'])
-        if not Adm.objects.filter(usuario= usuario).exists():
-            return HttpResponseRedirect('/')
+    usuario = request.user
+    if not Adm.objects.filter(usuario= usuario).exists():
+        return HttpResponseRedirect('/')
 
     template_name = 'usuario/usuarios.html'
 
     usuarios = filtros_usuarios(request)
 
     return TemplateResponse(request, template_name, locals())
+

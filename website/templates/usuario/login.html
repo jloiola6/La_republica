@@ -13,7 +13,7 @@
 
       <div class="formulario-grupo">
         <label for="campo-email">E-mail</label>
-        <input id="campo-email" type="email" name="user" maxlength="50" minlength="10" required>
+        <input id="campo-email" type="email" name="email" maxlength="50" minlength="10" required>
       </div>
 
       <div class="formulario-grupo">
@@ -25,6 +25,11 @@
         <button class="botao botao--azul" type="submit">Entrar</button>
       </div>
     </form>
+
+    <div class="formulario-grupo">
+      <a class="texto-medio texto-branco" href="{% url 'usuario:password_reset' %}">Esqueceu a senha</a>
+      <br>
+    </div>
 
     <p class="texto-medio texto-branco">Não possui uma conta? <b class="texto-verde"><a href="{% url 'usuario:cadastro' %}">Cadastre-se</a></b></p>
   </main>

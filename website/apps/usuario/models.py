@@ -3,15 +3,6 @@ from django.db import models
 
 # Create your models here.
 
-# class Usuario(models.Model):
-#     nome = models.CharField(max_length=250)
-#     email = models.CharField(max_length=60)
-#     senha = models.CharField(max_length=100)
-
-#     def __str__(self):
-#         return self.nome
-
-
 class Adm(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     dt_entrada = models.DateField(auto_now_add=True)
