@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from apps.agendamento.models import *
 from apps.usuario.models import *
 from apps.usuario.action import *
+from apps.usuario.filters import *
 from apps.usuario.components import verification
 from apps.clube.components import *
 
@@ -71,7 +72,7 @@ def associar_colaborador(request):
         if not Adm.objects.filter(usuario= usuario).exists():
             return HttpResponseRedirect('/')
 
-    template_name = 'usuario/associar_colaborador.html'
+    template_name = 'usuario/associar-colaborador.html'
 
     colabores = Colaborador.objects.values_list('usuario__id', flat= True)
     adms = Adm.objects.values_list('usuario__id', flat= True)
@@ -91,7 +92,7 @@ def servico_colaborador(request):
         if not Adm.objects.filter(usuario= usuario).exists():
             return HttpResponseRedirect('/')
 
-    template_name = 'usuario/servico_colaborador.html'
+    template_name = 'usuario/servico-colaborador.html'
 
     colaboradores = Colaborador.objects.all()
     servicos = Servico.objects.all()
@@ -110,7 +111,7 @@ def associar_adm(request):
         if not Adm.objects.filter(usuario= usuario).exists():
             return HttpResponseRedirect('/')
 
-    template_name = 'usuario/associar_adm.html'
+    template_name = 'usuario/associar-adm.html'
 
     adms = Adm.objects.values_list('usuario__id', flat= True)
     usuarios = Usuario.objects.exclude(id__in= adms)
@@ -119,5 +120,18 @@ def associar_adm(request):
         adm_associar(request)
 
         return HttpResponseRedirect('/usuario/perfil')
+
+    return TemplateResponse(request, template_name, locals())
+
+
+def usuarios(request):
+    if verification(request):
+        usuario = Usuario.objects.get(id= request.session['id'])
+        if not Adm.objects.filter(usuario= usuario).exists():
+            return HttpResponseRedirect('/')
+
+    template_name = 'usuario/usuarios.html'
+
+    usuarios = filtros_usuarios(request)
 
     return TemplateResponse(request, template_name, locals())
