@@ -7,10 +7,15 @@
 {% block conteudo %}
     <main>
         {% include "partials/_container-titulo-pagina.html" with titulo="Lista de serviços" %}
-        <br>
-        <a href="{% url 'agendamento:cadastrar-servico' %}" class="texto-verde">Cadastrar servico</a>
-        <br>
 
+        <div class="container-botoes">
+            <a href="{% url 'agendamento:cadastrar-servico' %}"><button class="botao botao--azul">Cadastrar servico</button></a>
+        </div>
+        
+        <div class="container-botoes">
+            <a href="{% url 'usuario:servico-colaborador' usuario.id %}"><button class="botao botao--azul">Associar serviço/colaborador</button></a>
+        </div>
+        
         {% for servico in servicos %}
             <br>
             <a href="{% url 'agendamento:editar-servico' servico.id %}" class="texto-branco">{{ servico }}</a>

@@ -66,9 +66,31 @@ def login(request):
     return TemplateResponse(request, template_name, locals())
 
 
+@login_required(login_url='/usuario/login')
+def perfil(request, perfil_id):
+    usuario = request.user
+    if usuario.id != perfil_id and not Adm.objects.filter(usuario= usuario).exists():
+        return HttpResponseRedirect('/')
+
+    template_name = 'usuario/perfil.html'
+
+    adm = not Adm.objects.filter(usuario__id= perfil_id).exists()
+    colaborador = not Colaborador.objects.filter(usuario__id= perfil_id).exists()
+
+    if request.method == 'POST':
+        if request.POST.get('associar_colaborador'):
+            colaborador_associar(request, perfil_id)
+        elif request.POST.get('associar_adm'):
+            adm_associar(request, perfil_id)
+        
+        return HttpResponseRedirect(f'/usuario/perfil/{perfil_id}')
+
+    return TemplateResponse(request, template_name, locals())
+
+
+@login_required(login_url='/usuario/login')
 def menu_perfil(request):
-    if request.user.is_authenticated:
-        usuario = request.user
+    usuario = request.user
 
     template_name = 'usuario/menu-perfil.html'
 
@@ -76,9 +98,9 @@ def menu_perfil(request):
 
 
 @login_required(login_url='/usuario/login')
-def associar_colaborador(request):
+def associar_colaborador(request, perfil_id):
     usuario = request.user
-    if not Adm.objects.filter(usuario= usuario).exists():
+    if usuario.id != perfil_id and not Adm.objects.filter(usuario= usuario).exists():
         return HttpResponseRedirect('/')
 
     template_name = 'usuario/associar-colaborador.html'
@@ -88,7 +110,7 @@ def associar_colaborador(request):
     usuarios = User.objects.exclude(id__in= colabores).exclude(id__in= adms).exclude(is_superuser= 1)
 
     if request.method == 'POST':
-        colaborador_associar(request)
+        colaborador_associar(request, perfil_id)
 
         return HttpResponseRedirect('/usuario/menu-perfil')
 
@@ -96,9 +118,9 @@ def associar_colaborador(request):
 
 
 @login_required(login_url='/usuario/login')
-def servico_colaborador(request):
+def servico_colaborador(request, perfil_id):
     usuario = request.user
-    if not Adm.objects.filter(usuario= usuario).exists():
+    if usuario.id != perfil_id and not Adm.objects.filter(usuario= usuario).exists():
         return HttpResponseRedirect('/')
 
     template_name = 'usuario/servico-colaborador.html'
@@ -115,9 +137,9 @@ def servico_colaborador(request):
 
 
 @login_required(login_url='/usuario/login')
-def associar_adm(request):
+def associar_adm(request, perfil_id):
     usuario = request.user
-    if not Adm.objects.filter(usuario= usuario).exists():
+    if usuario.id != perfil_id and not Adm.objects.filter(usuario= usuario).exists():
         return HttpResponseRedirect('/')
 
     template_name = 'usuario/associar-adm.html'
@@ -126,7 +148,7 @@ def associar_adm(request):
     usuarios = User.objects.exclude(id__in= adms).exclude(is_superuser= 1)
 
     if request.method == 'POST':
-        adm_associar(request)
+        adm_associar(request, perfil_id)
 
         return HttpResponseRedirect('/usuario/menu-perfil')
 

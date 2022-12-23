@@ -19,9 +19,10 @@
 
         </form>
 
+        <br><br>
         {% for usuario in usuarios %}
+            <p><a href="{% url 'usuario:perfil' usuario.id %}" class="texto-branco">{{ usuario.first_name }}</a></p>
             <br>
-            <a href="#" class="texto-branco">{{ usuario.first_name }}</a>
         {% endfor %}
 
     </main>

@@ -16,7 +16,7 @@ def cadastrar_servico(request):
     if not Adm.objects.filter(usuario= usuario).exists():
         return HttpResponseRedirect('/')
 
-    template_name = 'agendamento/cadastrar-servico.html'
+    template_name = 'agendamento/formulario-servico.html'
 
     if request.method == 'POST':
         servico_cadastro(request)

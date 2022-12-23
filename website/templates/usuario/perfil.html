@@ -1,0 +1,31 @@
+{% extends "partials/_base.html" %}
+
+{% load static %}
+
+{% block titulo %}Meu Perfil{% endblock %}
+
+{% block conteudo %}
+    <main>
+        {% include "partials/_container-titulo-pagina.html" with titulo="Meu Perfil" %}
+
+        <h2 class="texto-branco">Perfil de {{ usuario.first_name }}</h2>
+        <br>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {% if colaborador %}
+                <div class="container-botoes">
+                    <button class="botao botao--azul" type="submit" name="associar_colaborador" value="associar_colaborador">Associar colaborador</button>
+                </div>
+            {% endif %}
+            
+            {% if adm %}
+                <div class="container-botoes">
+                    <button class="botao botao--azul" type="submit" name="associar_adm" value="associar_adm">Associar adm</button>
+                </div>
+            {% endif %}
+        </form>
+
+    </main>
+{% endblock %}

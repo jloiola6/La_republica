@@ -35,10 +35,8 @@ def cadastrar_usuario(request):
     return usuario, campos_invalidos
 
 
-def colaborador_associar(request):
-    colaborador = request.POST.get('colaborador')
-
-    if User.objects.filter(id= colaborador).exists():
+def colaborador_associar(request, perfil_id):
+    if User.objects.filter(id= perfil_id).exists():
         usuario = User.objects.get(id= colaborador)
         
         if not Colaborador.objects.filter(usuario= usuario).exists():
@@ -47,7 +45,7 @@ def colaborador_associar(request):
             colaborador.save()
 
 
-def colaborador_servico_associar(request):
+def colaborador_servico_associar(request, perfil_id):
     colaborador = request.POST.get('colaborador')
     servico = request.POST.get('servico')
 
@@ -62,11 +60,9 @@ def colaborador_servico_associar(request):
             colaborador_servico.save()
 
 
-def adm_associar(request):
-    usuario = request.POST.get('usuario')
-
-    if Usuario.objects.filter(id= usuario).exists():
-        usuario = Usuario.objects.get(id= usuario)
+def adm_associar(request, perfil_id):
+    if User.objects.filter(id= perfil_id).exists():
+        usuario = User.objects.get(id= perfil_id)
         
         if not Adm.objects.filter(usuario= usuario).exists():
             adm = Adm()
