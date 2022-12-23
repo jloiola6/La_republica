@@ -13,33 +13,41 @@
 
             <div class="formulario-grupo">
                 <label for="campo-nome">Nome</label>
-                <input id="campo-nome" type="text" name="nome" maxlength="150"required>
+                <input id="campo-nome" type="text" name="nome" maxlength="150" value="{{ servico }}" required>
             </div>
-
+            
             <div class="formulario-grupo">
                 <label for="campo-duracao">Duração (Min)</label>
-                <input id="campo-duracao" type="number" name="duracao" maxlength="1" required>
+                <input id="campo-duracao" type="number" name="duracao" maxlength="1" value="{{ servico.duracao }}" required>
             </div>
-
+            
             <div class="formulario-grupo">
                 <label for="campo-descricao">Descrição</label>
-                <textarea name="descricao" id="campo-descricao" cols="30" rows="10"></textarea>
+                {% if servico.descricao %}
+                    <input id="campo-descricao" type="text" name="descricao" value="{{ servico.descricao }}" required>
+                {% else %}
+                    <textarea name="descricao" id="campo-descricao"></textarea>
+                {% endif %}
             </div>
             
             <br><hr><br>
 
             <div class="formulario-grupo">
                 <label for="campo-preco">Valor Total</label>
-                <input type="number" name="valor" id="campo-preco">
+                <input type="text" name="valor" id="campo-preco" value="{{ preco.valor_total }}">
             </div>
 
             <div class="formulario-grupo">
                 <label for="campo-valor-comissao">Valor Comissão</label>
-                <input type="number" name="valor_comissao" id="campo-valor-comissao">
+                <input type="text" name="valor_comissao" id="campo-valor-comissao" value="{{ preco.comissao }}">
             </div>
             
             <div class="container-botoes">
-                <button class="botao botao--azul" type="submit">Cadastrar Serviço</button>
+                {% if servico %}
+                    <button class="botao botao--azul" type="submit">Atualizar Serviço</button>
+                {% else %}
+                    <button class="botao botao--azul" type="submit">Cadastrar Serviço</button>
+                {% endif %}
             </div>
         </form>
 

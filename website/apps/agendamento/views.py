@@ -21,7 +21,39 @@ def cadastrar_servico(request):
     if request.method == 'POST':
         servico_cadastro(request)
 
+        return HttpResponseRedirect('/agendamento/listar-servicos')
+
+    return TemplateResponse(request, template_name, locals())
+
+
+@login_required(login_url='/usuario/login')
+def editar_servico(request, servico_id):
+    usuario = request.user
+    if not Adm.objects.filter(usuario= usuario).exists():
         return HttpResponseRedirect('/')
+
+    template_name = 'agendamento/formulario-servico.html'
+
+    servico = Servico.objects.get(id= servico_id)
+    preco = PrecoServico.objects.filter(servico= servico_id).last()
+
+    if request.method == 'POST':
+        servico_cadastro(request, servico)
+
+        return HttpResponseRedirect('/agendamento/listar-servicos')
+
+    return TemplateResponse(request, template_name, locals())
+
+
+@login_required(login_url='/usuario/login')
+def listar_servico(request):
+    usuario = request.user
+    if not Adm.objects.filter(usuario= usuario).exists():
+        return HttpResponseRedirect('/')
+
+    template_name = 'agendamento/servicos.html'
+
+    servicos = Servico.objects.all()
 
     return TemplateResponse(request, template_name, locals())
 

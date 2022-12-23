@@ -1,0 +1,20 @@
+{% extends "partials/_base.html" %}
+
+{% load static %}
+
+{% block titulo %}Meu Perfil{% endblock %}
+
+{% block conteudo %}
+    <main>
+        {% include "partials/_container-titulo-pagina.html" with titulo="Lista de serviços" %}
+        <br>
+        <a href="{% url 'agendamento:cadastrar-servico' %}" class="texto-verde">Cadastrar servico</a>
+        <br>
+
+        {% for servico in servicos %}
+            <br>
+            <a href="{% url 'agendamento:editar-servico' servico.id %}" class="texto-branco">{{ servico }}</a>
+        {% endfor %}
+
+    </main>
+{% endblock %}

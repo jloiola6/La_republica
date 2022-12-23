@@ -3,12 +3,12 @@ from datetime import datetime
 from apps.agendamento.models import *
 
 
-def servico_cadastro(request):
+def servico_cadastro(request, servico= None):
     nome = request.POST.get('nome')
     duracao = request.POST.get('duracao')
     descricao = request.POST.get('descricao')
     
-    servico = None
+    servico = servico
     campos_invalidos = []
 
     if 10 > len(nome) < 150:
@@ -16,13 +16,14 @@ def servico_cadastro(request):
 
     if len(duracao) == 0:
         campos_invalidos.append('duracao')
-
-    if not Servico.objects.filter(nome= nome).exists():
+    
+    if servico == None:
         servico = Servico()
-        servico.nome = nome
-        servico.duracao = duracao
-        servico.descricao = descricao
-        servico.save()
+    
+    servico.nome = nome
+    servico.duracao = duracao
+    servico.descricao = descricao
+    servico.save()
 
     preco_cadastro(request, servico)
 

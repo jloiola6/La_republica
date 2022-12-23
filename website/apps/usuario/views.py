@@ -90,7 +90,7 @@ def associar_colaborador(request):
     if request.method == 'POST':
         colaborador_associar(request)
 
-        return HttpResponseRedirect('/usuario/perfil')
+        return HttpResponseRedirect('/usuario/menu-perfil')
 
     return TemplateResponse(request, template_name, locals())
 
@@ -109,7 +109,7 @@ def servico_colaborador(request):
     if request.method == 'POST':
         colaborador_servico_associar(request)
 
-        return HttpResponseRedirect('/usuario/perfil')
+        return HttpResponseRedirect('/usuario/menu-perfil')
 
     return TemplateResponse(request, template_name, locals())
 
@@ -128,7 +128,7 @@ def associar_adm(request):
     if request.method == 'POST':
         adm_associar(request)
 
-        return HttpResponseRedirect('/usuario/perfil')
+        return HttpResponseRedirect('/usuario/menu-perfil')
 
     return TemplateResponse(request, template_name, locals())
 
