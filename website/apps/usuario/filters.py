@@ -20,6 +20,8 @@ def filtros_usuarios(request):
         elif tipo == 'A':
             emails = []
             stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
+
+            print(stripe.Subscription.retrieve("sub_1MGwQgGORsxenfcwFy6BRt39"))
             subs = stripe.Subscription.search(query="status:'active'")['data']
 
             if subs != []:

@@ -1,8 +1,6 @@
 from django.template.response import TemplateResponse
 from django.http import HttpResponseRedirect
-from django.contrib.auth.models import User
 
-from apps.usuario.components import verification
 from apps.core.models import *
 
 

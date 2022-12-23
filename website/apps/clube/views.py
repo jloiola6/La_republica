@@ -1,11 +1,12 @@
+from django.contrib.auth.decorators import login_required
+
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
-from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.conf import settings
+
 import stripe
 
-from apps.usuario.components import verification
 from apps.clube.models import LinkPagamento
 from apps.clube.components import *
 
@@ -13,8 +14,8 @@ from apps.clube.components import *
 # Create your views here.
 
 def index(request):
-    if verification(request):
-        usuario = User.objects.get(id= request.session['id'])
+    if request.user.is_authenticated:
+        usuario = request.user
         if verificando_assinatura(usuario):
             return HttpResponseRedirect('/clube/perfil')
 
@@ -36,23 +37,19 @@ def index(request):
     return TemplateResponse(request, template_name, locals())
 
 
+@login_required(login_url='/usuario/login')
 def perfil(request):
-    if not verification(request):
-        return HttpResponseRedirect('/')
-
     template_name = 'clube/perfil.html'
 
-    usuario = User.objects.get(id= request.session['id'])
+    usuario = request.user
     clube = verificando_assinatura(usuario)
     
     return TemplateResponse(request, template_name, locals())
 
 
+@login_required(login_url='/usuario/login')
 def cancelar_assinatura(request):
-    if not verification(request):
-        return HttpResponseRedirect('/')
-    
-    usuario = User.objects.get(id= request.session['id'])
+    usuario = request.user
     stripe_id = usuario_stripe(usuario)
 
     sub = list(stripe.Invoice.search(query=f"customer: '{stripe_id}'"))
