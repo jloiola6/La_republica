@@ -46,3 +46,15 @@ def preco_cadastro(request, servico):
     preco.comissao = valor_comissao
     preco.save()
 
+
+def colaborador_servico_associar(request, servico):
+    colaborador = request.POST.get('colaborador')
+
+    if Colaborador.objects.filter(id= colaborador).exists() and Servico.objects.filter(id= servico).exists():
+        colaborador = Colaborador.objects.get(id= colaborador)
+
+        if not ColaboradorServico.objects.filter(colaborador= colaborador, servico= servico).exists():
+            colaborador_servico = ColaboradorServico()
+            colaborador_servico.colaborador = colaborador
+            colaborador_servico.servico = servico
+            colaborador_servico.save()

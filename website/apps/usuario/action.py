@@ -45,21 +45,6 @@ def colaborador_associar(request, perfil_id):
             colaborador.save()
 
 
-def colaborador_servico_associar(request, perfil_id):
-    colaborador = request.POST.get('colaborador')
-    servico = request.POST.get('servico')
-
-    if Colaborador.objects.filter(id= colaborador).exists() and Servico.objects.filter(id= servico).exists():
-        colaborador = Colaborador.objects.get(id= colaborador)
-        servico = Servico.objects.get(id= servico)
-
-        if not ColaboradorServico.objects.filter(colaborador= colaborador, servico= servico).exists():
-            colaborador_servico = ColaboradorServico()
-            colaborador_servico.colaborador = colaborador
-            colaborador_servico.servico = servico
-            colaborador_servico.save()
-
-
 def adm_associar(request, perfil_id):
     if User.objects.filter(id= perfil_id).exists():
         usuario = User.objects.get(id= perfil_id)

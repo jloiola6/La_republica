@@ -1,0 +1,39 @@
+{% extends "partials/_base.html" %}
+
+{% load static %}
+
+{% block titulo %}Meu Perfil{% endblock %}
+
+{% block conteudo %}
+    <main>
+        {% include "partials/_container-titulo-pagina.html" with titulo="Serviço" %}
+
+        <br>
+        <h2 class="texto-branco">Perfil de {{ servico }}</h2>
+        <br>
+
+        <div class="container-botoes">
+            <a href="{% url 'agendamento:editar-servico' servico.id %}"><button class="botao botao--azul">Editar serviço</button></a>
+        </div>
+
+        <br><hr><br>
+        <h2 class="texto-branco">Preços</h2>
+        {% for preco in precos %}
+            <br>
+            <p class="texto-branco">{{ preco.valor_total }}</p>
+        {% endfor %}
+
+        <br><hr>
+        <div class="container-botoes">
+            <a href="{% url 'agendamento:servico-colaborador' servico.id %}"><button class="botao botao--azul">Associar colaborador</button></a>
+        </div>
+
+        <br><br>
+        <h2 class="texto-branco">Colabores</h2>
+        {% for colaborador in colaboradores %}
+            <br>
+            <p class="texto-branco">{{ colaborador.colaborador }}</p>
+        {% endfor %}
+
+    </main>
+{% endblock %}

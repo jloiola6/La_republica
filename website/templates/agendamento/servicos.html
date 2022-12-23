@@ -13,12 +13,13 @@
         </div>
         
         <div class="container-botoes">
-            <a href="{% url 'usuario:servico-colaborador' usuario.id %}"><button class="botao botao--azul">Associar serviço/colaborador</button></a>
+            <a href="{% url 'agendamento:servico-colaborador' usuario.id %}"><button class="botao botao--azul">Associar serviço/colaborador</button></a>
         </div>
         
+        <br><br>
         {% for servico in servicos %}
+            <p><a href="{% url 'agendamento:perfil-servico' servico.id %}" class="texto-branco">{{ servico }}</a></p>
             <br>
-            <a href="{% url 'agendamento:editar-servico' servico.id %}" class="texto-branco">{{ servico }}</a>
         {% endfor %}
 
     </main>

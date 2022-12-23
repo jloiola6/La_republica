@@ -18,8 +18,7 @@ urlpatterns = [
 
     path('perfil/<int:perfil_id>', perfil, name='perfil'),
     path('menu-perfil', menu_perfil, name='menu-perfil'),
-    path('associar-colaborador/<int:perfil_id>', associar_colaborador, name='associar-colaborador'),
-    path('servico-colaborador/<int:perfil_id>', servico_colaborador, name='servico-colaborador'),
-    path('associar-adm/<int:perfil_id>', associar_adm, name='associar-adm'),
+    # path('associar-colaborador/<int:perfil_id>', associar_colaborador, name='associar-colaborador'),
+    # path('associar-adm/<int:perfil_id>', associar_adm, name='associar-adm'),
     path('usuarios', usuarios, name='usuarios'),
 ]
