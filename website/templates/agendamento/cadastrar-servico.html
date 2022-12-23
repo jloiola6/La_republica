@@ -1,0 +1,50 @@
+{% extends "partials/_base.html" %}
+
+{% load static %}
+
+{% block titulo %}Cadastro{% endblock %}
+
+{% block conteudo %}
+    <main>
+        {% include "partials/_container-titulo-pagina.html" with titulo="Cadastro" %}
+        
+        <form id="formulario-login" class="surface" method="POST">
+            {% csrf_token %}
+
+            <div class="formulario-grupo">
+                <label for="campo-nome">Nome</label>
+                <input id="campo-nome" type="text" name="nome" maxlength="150"required>
+            </div>
+
+            <div class="formulario-grupo">
+                <label for="campo-duracao">Duração (Min)</label>
+                <input id="campo-duracao" type="number" name="duracao" maxlength="1" required>
+            </div>
+
+            <div class="formulario-grupo">
+                <label for="campo-descricao">Descrição</label>
+                <textarea name="descricao" id="campo-descricao" cols="30" rows="10"></textarea>
+            </div>
+            
+            <br><hr><br>
+
+            <div class="formulario-grupo">
+                <label for="campo-preco">Valor Total</label>
+                <input type="number" name="valor" id="campo-preco">
+            </div>
+
+            <div class="formulario-grupo">
+                <label for="campo-valor-comissao">Valor Comissão</label>
+                <input type="number" name="valor_comissao" id="campo-valor-comissao">
+            </div>
+            
+            <div class="container-botoes">
+                <button class="botao botao--azul" type="submit">Cadastrar Serviço</button>
+            </div>
+        </form>
+
+        {% for campo in campos_invalidos %}
+            <label>{{ campo }}</label>
+        {% endfor %}
+    </main>
+{% endblock %}

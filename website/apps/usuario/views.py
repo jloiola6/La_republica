@@ -13,6 +13,7 @@ from django.http import HttpResponseRedirect
 from apps.usuario.filters import *
 from apps.usuario.action import *
 from apps.agendamento.models import *
+from apps.usuario.models import *
 
 # Create your views here.
 
@@ -25,6 +26,7 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
                       " If you don't receive an email, " \
                       "please make sure you've entered the address you registered with, and check your spam folder."
     success_url = reverse_lazy('usuario:login')
+
 
 def logout(request):
     logout_django(request)
@@ -68,7 +70,7 @@ def menu_perfil(request):
     if request.user.is_authenticated:
         usuario = request.user
 
-    template_name = 'usuario/perfil.html'
+    template_name = 'usuario/menu-perfil.html'
 
     return TemplateResponse(request, template_name, locals())
 

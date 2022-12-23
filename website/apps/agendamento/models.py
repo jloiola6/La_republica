@@ -8,6 +8,7 @@ class Servico(models.Model):
     nome = models.CharField(max_length=100)
     duracao = models.IntegerField()
     descricao = models.CharField(max_length=500)
+    imagem = models.FileField(upload_to='static/media', max_length=100, blank= True, null= True)
 
     def __str__(self):
         return self.nome
