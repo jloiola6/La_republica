@@ -14,8 +14,3 @@ from django.db import models
 # class Clube(models.Model):
 #     nome = models.CharField(max_length=100)
 #     assinatura = models.ForeignKey(AssinaturaClube, on_delete=models.DO_NOTHING)
-
-
-class LinkPagamento(models.Model):
-    produto = models.CharField(max_length=50, blank= True, null= True)
-    link = models.CharField(max_length=500, blank= True, null= True)

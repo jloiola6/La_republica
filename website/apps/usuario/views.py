@@ -13,7 +13,6 @@ from django.http import HttpResponseRedirect
 from apps.usuario.filters import *
 from apps.usuario.action import *
 from apps.agendamento.models import *
-from apps.clube.components import *
 
 # Create your views here.
 

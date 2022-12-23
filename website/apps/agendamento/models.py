@@ -1,7 +1,6 @@
-from django.contrib.auth.models import User
 from django.db import models
 
-from apps.usuario.models import Colaborador
+from apps.usuario.models import Colaborador, User
 
 # Create your models here.
 

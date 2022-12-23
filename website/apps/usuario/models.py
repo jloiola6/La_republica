@@ -1,7 +1,13 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 # Create your models here.
+
+class User(AbstractUser):
+    id_consumer = models.CharField(max_length=150, blank= True, null= True)
+    id_subscription = models.CharField(max_length=150, blank= True, null= True)
+    clube = models.IntegerField(default=0)
+
 
 class Adm(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.DO_NOTHING)

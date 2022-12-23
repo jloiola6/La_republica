@@ -1,4 +1,5 @@
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from apps.usuario.models import User
 
 
 def cadastrar_usuario(request):

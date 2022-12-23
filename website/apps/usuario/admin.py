@@ -14,5 +14,11 @@ class ColaboradorAdmin(admin.ModelAdmin):
     search_fields = ['usuario', 'dt_entrada', 'dt_saida', 'situacao']
 
 
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'email', 'id_consumer', 'id_subscription', 'clube')
+    search_fields = ['username', 'email', 'id_consumer', 'id_subscription', 'clube']
+
+
 admin.site.register(Colaborador, ColaboradorAdmin)
 admin.site.register(Adm, AdmAdmin)
+admin.site.register(User, UserAdmin)

@@ -6,9 +6,7 @@ from django.http import JsonResponse
 from django.conf import settings
 
 import stripe
-
-from apps.clube.models import LinkPagamento
-from apps.clube.components import *
+import json
 
 
 # Create your views here.
@@ -16,7 +14,7 @@ from apps.clube.components import *
 def index(request):
     if request.user.is_authenticated:
         usuario = request.user
-        if verificando_assinatura(usuario):
+        if usuario.clube == 1:
             return HttpResponseRedirect('/clube/perfil')
 
     template_name = 'clube/index.html'
@@ -24,15 +22,17 @@ def index(request):
     produtos = []
     stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
     for plan in stripe.Plan.list():
-        product = stripe.Product.retrieve(plan['product'])
+        plano_id = plan['id']
+        produto_id = plan['product']
+        product = stripe.Product.retrieve(produto_id)
         valor = plan['amount_decimal']
         valor = f'{valor[:len(valor)-2]},{valor[-2:]}'        
-        link = LinkPagamento.objects.get(produto= product['id']).link
         
-        produtos.append({'name': product['name'],
+        produtos.append({'plano_id': plano_id,
+                'produto_id': produto_id,
+                'name': product['name'],
                 'description': product['description'],
-                'valor': valor,
-                'link': link})
+                'valor': valor})
     
     return TemplateResponse(request, template_name, locals())
 
@@ -42,7 +42,7 @@ def perfil(request):
     template_name = 'clube/perfil.html'
 
     usuario = request.user
-    clube = verificando_assinatura(usuario)
+    clube = usuario.clube == 1
     
     return TemplateResponse(request, template_name, locals())
 
@@ -50,106 +50,58 @@ def perfil(request):
 @login_required(login_url='/usuario/login')
 def cancelar_assinatura(request):
     usuario = request.user
-    stripe_id = usuario_stripe(usuario)
-
-    sub = list(stripe.Invoice.search(query=f"customer: '{stripe_id}'"))
-    sub = sub[-1]['subscription']
+    sub = usuario.id_subscription
 
     try:
         stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
         stripe.Subscription.delete(sub)
+
+        request.user.clube = 0
+        request.user.save()
     except Exception as e:
         return JsonResponse({'error': (e.args[0])}, status =403)
 
     return HttpResponseRedirect('/')
 
 
-# def checkout(request):
-#     if not verification(request):
-#         return HttpResponseRedirect('/')
+@login_required
+def criar_assinatura(request): 
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        payment_method = data['payment_method']
+        stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
 
-#     usuario = User.objects.get(id= request.session['id'])
-#     print('0')
-#     if request.method == 'POST':
-#         # Reads application/json and returns a response
-#         data = json.loads(request.body)
-#         payment_method = data['payment_method']
-#         print('Método: ', payment_method)
-#         # stripe.api_key = djstripe.settings.STRIPE_SECRET_KEY
-#         stripe.api_key = 'sk_test_51M77STGORsxenfcwIpIsRrkxKv8cVgpzjmk3bVRcATWjRCFFKQxRpqgXoeSJOKeU0DTJPbxzOTfRLxR70zRcEtoe00PcCkVNWc'
-        
+        payment_method_obj = stripe.PaymentMethod.retrieve(payment_method)
+        try:
+            #Criando usuário
+            customer = stripe.Customer.create(
+                payment_method=payment_method,
+                email=request.user.email,
+                invoice_settings={
+                    'default_payment_method': payment_method
+                }
+            )
 
-#         #Criando Método de pagamentos
-#         metodo = stripe.PaymentMethod.create(
-#                 type="card",
-#                 card={
-#                     "number": "4242424242424242",
-#                     "exp_month": 12,
-#                     "exp_year": 2034,
-#                     "cvc": "123",
-#                 },
-#         )
+            #Criando Assinatura
+            subscription = stripe.Subscription.create(
+                customer=customer.id,
+                items=[
+                    {
+                        "price": data["price_id"],
+                    },
+                ],
+                expand=["latest_invoice.payment_intent"]
+            )
 
-#         print(metodo)
+            #Vinculando assinatura criada ao usuário do sistema
+            request.user.id_consumer = customer.id
+            request.user.id_subscription = subscription.id
+            request.user.clube = 1
+            request.user.save()
 
-#         payment_method_obj = stripe.PaymentMethod.retrieve(payment_method, )
-#         print('Saida: ', payment_method_obj)
+            return JsonResponse(subscription)
 
-#         # payment_method_obj = stripe.PaymentMethod.retrieve()
-#         print('Método 2: ', payment_method_obj)
-#         print('teste de teste')
-#         djstripe.models.PaymentMethod.sync_from_stripe_data(payment_method_obj)
-
-#         print('1')
-
-#         try:
-#             inscricao = InscricaoClube()
-#             # This creates a new Customer and attaches the PaymentMethod in one API call.
-#             customer = stripe.Customer.create(
-#                 payment_method = payment_method,
-#                 email = usuario.email,
-#                 invoice_settings = {
-#                     'default_payment_method': payment_method
-#                 }
-#             )
-
-#             djstripe_customer = djstripe.models.Customer.sync_from_stripe_data(customer)
-#             inscricao.customer = djstripe_customer
-            
-#             print('2')
-
-#             # At this point, associate the ID of the Customer object with your
-#             # own internal representation of a customer, if you have one.
-#             # print(customer)
-
-#             # Subscribe the user to the subscription created
-#             subscription = stripe.Subscription.create(
-#                 customer=customer.id,
-#                 items=[
-#                     {
-#                         "price": data["price_id"],
-#                     },
-#                 ],
-#                 expand=["latest_invoice.payment_intent"]
-#             )
-#             print('3')
-
-#             djstripe_subscription = djstripe.models.Subscription.sync_from_stripe_data(subscription)
-
-#             inscricao.subscription = djstripe_subscription
-#             inscricao.save()
-
-#             print('4')
-#             return JsonResponse(subscription)
-#         except Exception as e:
-#             print('5')
-#             return JsonResponse({'error': (e.args[0])}, status =403)
-#     else:
-#         print('6')
-#         return HTTPResponse('requet method not allowed')
-
-
-# def finalizado(request):
-#     template_name = 'clube/finalizado.html'
-
-#     return TemplateResponse(request, template_name, locals())
+        except Exception as e:
+            return JsonResponse({'error': (e.args[0])}, status =403)
+    else:
+        print('requet method not allowed')

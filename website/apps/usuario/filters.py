@@ -18,23 +18,25 @@ def filtros_usuarios(request):
             usuarios = Colaborador.objects.all()
 
         elif tipo == 'A':
-            emails = []
-            stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
+            usuarios = usuarios.filter(clube= 1)
 
-            print(stripe.Subscription.retrieve("sub_1MGwQgGORsxenfcwFy6BRt39"))
-            subs = stripe.Subscription.search(query="status:'active'")['data']
+            # emails = []
+            # stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
 
-            if subs != []:
-                customers = []
-                for sub in subs:
-                    customers.append(sub['customer'])
+            # print(stripe.Subscription.retrieve("sub_1MGwQgGORsxenfcwFy6BRt39"))
+            # subs = stripe.Subscription.search(query="status:'active'")['data']
 
-            if customers != []:
-                for customer in customers:
-                    emails.append(stripe.Customer.retrieve(customer)['email'])
+            # if subs != []:
+            #     customers = []
+            #     for sub in subs:
+            #         customers.append(sub['customer'])
 
-            if emails != []:
-                usuarios = usuarios.filter(email__in= emails)
+            # if customers != []:
+            #     for customer in customers:
+            #         emails.append(stripe.Customer.retrieve(customer)['email'])
+
+            # if emails != []:
+            #     usuarios = usuarios.filter(email__in= emails)
 
         elif tipo == 'Adm':
             usuarios = Adm.objects.all()
