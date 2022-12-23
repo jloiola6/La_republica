@@ -64,7 +64,7 @@ def login(request):
     return TemplateResponse(request, template_name, locals())
 
 
-def perfil(request):
+def menu_perfil(request):
     if request.user.is_authenticated:
         usuario = request.user
 
