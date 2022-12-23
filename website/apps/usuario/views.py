@@ -39,6 +39,7 @@ def cadastro(request):
 
         if usuario:
             login_django(request, usuario)
+            return HttpResponseRedirect('/')
         else:
             print(campos_invalidos)
             
@@ -82,7 +83,7 @@ def associar_colaborador(request):
 
     colabores = Colaborador.objects.values_list('usuario__id', flat= True)
     adms = Adm.objects.values_list('usuario__id', flat= True)
-    usuarios = User.objects.exclude(id__in= colabores).exclude(id__in= adms)
+    usuarios = User.objects.exclude(id__in= colabores).exclude(id__in= adms).exclude(is_superuser= 1)
 
     if request.method == 'POST':
         colaborador_associar(request)

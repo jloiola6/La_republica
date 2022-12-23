@@ -1,5 +1,6 @@
 # from django.contrib.auth.models import User
-from apps.usuario.models import User
+from apps.usuario.models import *
+from apps.agendamento.models import ColaboradorServico, Servico
 
 
 def cadastrar_usuario(request):
@@ -37,8 +38,8 @@ def cadastrar_usuario(request):
 def colaborador_associar(request):
     colaborador = request.POST.get('colaborador')
 
-    if Usuario.objects.filter(id= colaborador).exists():
-        usuario = Usuario.objects.get(id= colaborador)
+    if User.objects.filter(id= colaborador).exists():
+        usuario = User.objects.get(id= colaborador)
         
         if not Colaborador.objects.filter(usuario= usuario).exists():
             colaborador = Colaborador()

@@ -12,7 +12,7 @@
             {% csrf_token %}
             <select name="usuario" id="">
                 {% for usuario in usuarios %}
-                    <option value="{{ usuario.id }}">{{ usuario.nome }}</option>
+                    <option value="{{ usuario.id }}">{{ usuario.first_name }}</option>
                 {% endfor %}
             </select>
 
