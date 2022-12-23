@@ -11,6 +11,8 @@
     <h2 class="texto-branco">{{ usuario.nome }}</h2>
     <br>
     <br>
+    <p><a href="{% url 'usuario:perfil' usuario.id %}" class="texto-branco">Meu Perfil</a></p>
+    <br>
     <p><a href="{% url 'usuario:usuarios' %}" class="texto-branco">Lista usuarios</a></p>
     <br>
     <p><a href="{% url 'agendamento:listar-servicos' %}" class="texto-branco">Listar servicos</a></p>

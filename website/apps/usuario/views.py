@@ -74,8 +74,8 @@ def perfil(request, perfil_id):
 
     template_name = 'usuario/perfil.html'
 
-    adm = not Adm.objects.filter(usuario__id= perfil_id).exists()
-    colaborador = not Colaborador.objects.filter(usuario__id= perfil_id).exists()
+    adm = Adm.objects.filter(usuario__id= perfil_id).exists()
+    colaborador = Colaborador.objects.filter(usuario__id= perfil_id).exists()
 
     if request.method == 'POST':
         if request.POST.get('associar_colaborador'):
