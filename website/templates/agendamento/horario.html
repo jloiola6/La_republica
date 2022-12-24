@@ -1,0 +1,26 @@
+{% extends "partials/_base.html" %}
+
+{% load static %}
+
+{% block titulo %}Meu Perfil{% endblock %}
+
+{% block conteudo %}
+    <main>
+        {% include "partials/_container-titulo-pagina.html" with titulo="Horário" %}
+
+        <br><br>
+        <h1 class="texto-branco">Serviço: {{ servico.nome }} - Duração: {{ servico.duracao }}m</h1>
+
+        <br><br>
+        {% for grade in grades %}
+            <hr>
+            <p><a href="{% url 'agendamento:perfil-servico' servico.id %}" class="texto-branco">{{ grade.nome }}, {{ grade.data }}</a></p>
+            <br><br><br>
+            {% for hora in grade.horarios %}
+                <a href="{% url 'agendamento:concluir' servico.id grade.data hora %}" class="texto-branco"><span class="texto-branco">{{ hora }} | </span></a>
+            {% endfor %}
+            <br><br><br>
+        {% endfor %}
+
+    </main>
+{% endblock %}

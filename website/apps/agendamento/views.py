@@ -2,13 +2,58 @@ from django.contrib.auth.decorators import login_required
 
 from django.template.response import TemplateResponse
 from django.http import HttpResponseRedirect
+from datetime import datetime
 
 from apps.agendamento.models import *
+from apps.agendamento.components import consultar_horarios, consultar_servico, verificar_colaborador
 from apps.agendamento.action import *
 from apps.usuario.models import *
 
 
 # Create your views here.
+
+@login_required(login_url='/usuario/login')
+def index(request):
+    usuario = request.user
+    
+    template_name = 'agendamento/index.html'
+
+    servicos = Servico.objects.all()
+
+    return TemplateResponse(request, template_name, locals())
+
+
+@login_required(login_url='/usuario/login')
+def agendamento_horario(request, servico_id):
+    usuario = request.user
+    
+    template_name = 'agendamento/horario.html'
+
+    servico = Servico.objects.get(id= servico_id)
+    grades = consultar_horarios(servico)
+
+    return TemplateResponse(request, template_name, locals())
+
+
+@login_required(login_url='/usuario/login')
+def agendamento_concluir(request, servico_id, data, hora):
+    usuario = request.user
+    servico = Servico.objects.get(id= servico_id)
+    data = datetime.strptime(data, '%Y-%m-%d').date()
+
+    if not consultar_servico(servico, data, hora= hora):
+        return HttpResponseRedirect('/')
+    
+    template_name = 'agendamento/concluir.html'
+    
+    preco = PrecoServico.objects.get(servico= servico, situacao= 1)
+    colaboradores = verificar_colaborador(preco, data, hora)
+
+    if request.method == 'POST':
+        agendamento(request, usuario, preco, data, hora)
+    
+    return TemplateResponse(request, template_name, locals())
+
 
 @login_required(login_url='/usuario/login')
 def cadastrar_servico(request):

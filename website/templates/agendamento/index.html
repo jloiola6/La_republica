@@ -1,5 +1,18 @@
 {% extends "partials/_base.html" %}
 
+{% load static %}
+
+{% block titulo %}Meu Perfil{% endblock %}
+
 {% block conteudo %}
-  <h1>Agendamento</h1>
+    <main>
+        {% include "partials/_container-titulo-pagina.html" with titulo="Agendamento" %}
+
+        <br><br>
+        {% for servico in servicos %}
+            <p><a href="{% url 'agendamento:horario' servico.id %}" class="texto-branco">{{ servico }}</a></p>
+            <br>
+        {% endfor %}
+
+    </main>
 {% endblock %}

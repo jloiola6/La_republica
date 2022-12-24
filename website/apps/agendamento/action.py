@@ -34,10 +34,10 @@ def preco_cadastro(request, servico):
     valor = request.POST.get('valor')
     valor_comissao = request.POST.get('valor_comissao')
 
-    if PrecoServico.objects.filter(servico= servico):
-        preco = PrecoServico.objects.get(servico= servico)
+    if PrecoServico.objects.filter(servico= servico, situacao= 1):
+        preco = PrecoServico.objects.get(servico= servico, situacao= 1)
         preco.dt_fim = datetime.today()
-        preco.status = 0
+        preco.situacao = 0
         preco.save()
 
     preco = PrecoServico()
@@ -58,3 +58,20 @@ def colaborador_servico_associar(request, servico):
             colaborador_servico.colaborador = colaborador
             colaborador_servico.servico = servico
             colaborador_servico.save()
+
+
+def agendamento(request, usuario, preco, data, hora):
+    colaborador = request.POST.get('colaborador')
+    colaborador = Colaborador.objects.get(id= colaborador)
+
+    if not Agendamento.objects.filter(colaborador= colaborador, cliente= usuario, servico= preco, data= data, hora= hora).exists():
+        agendameto = Agendamento()
+        agendameto.colaborador = colaborador
+        agendameto.cliente = usuario
+        agendameto.servico = preco
+        agendameto.data = data
+        agendameto.hora = hora
+        agendameto.situacao = 'Reservado'
+        agendameto.assinatura = usuario.clube
+        agendameto.save()
+                       
