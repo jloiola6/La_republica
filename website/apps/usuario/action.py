@@ -7,9 +7,6 @@ def cadastrar_usuario(request):
     nome = request.POST.get('nome')
     email = request.POST.get('email')
     password = request.POST.get('password')
-    
-    # password = hashlib.md5(password.encode())
-    # password = password.hexdigest()
 
     usuario = None
     campos_invalidos = []
@@ -33,6 +30,21 @@ def cadastrar_usuario(request):
         usuario.save()
     
     return usuario, campos_invalidos
+
+
+def editar_usuario(request, usuario):
+    nome = request.POST.get('nome')
+
+    campos_invalidos = []
+
+    if 10 > len(nome) < 150:
+        campos_invalidos.append('Nome')
+
+    if campos_invalidos == []:
+        usuario.first_name = nome
+        usuario.save()
+    
+    return campos_invalidos
 
 
 def colaborador_associar(request, perfil_id):

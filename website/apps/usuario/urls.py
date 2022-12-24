@@ -8,6 +8,7 @@ app_name = 'usuario'
 
 urlpatterns = [
     path('cadastro/', cadastro, name='cadastro'),    
+    path('editar-dados/', editar_dados, name='editar-dados'),    
     path('login/', login, name='login'),
     path('logout/', logout, name='logout'),
     
@@ -18,7 +19,5 @@ urlpatterns = [
 
     path('perfil/<int:perfil_id>', perfil, name='perfil'),
     path('menu-perfil', menu_perfil, name='menu-perfil'),
-    # path('associar-colaborador/<int:perfil_id>', associar_colaborador, name='associar-colaborador'),
-    # path('associar-adm/<int:perfil_id>', associar_adm, name='associar-adm'),
     path('usuarios', usuarios, name='usuarios'),
 ]

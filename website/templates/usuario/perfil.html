@@ -11,22 +11,22 @@
         <h2 class="texto-branco">Perfil de {{ usuario.first_name }}</h2>
         <br>
 
+        <div class="container-botoes">
+            <a href="{% url 'usuario:editar-dados' %}"><button class="botao botao--azul">Editar Dados</button></a>
+        </div>
+
         {% if adm %}
-            <form method="POST">
-                {% csrf_token %}
-                
-                {% if not colaborador %}
+            {% if not colaborador %}
                 <div class="container-botoes">
                     <button class="botao botao--azul" type="submit" name="associar_colaborador" value="associar_colaborador">Associar colaborador</button>
                 </div>
-                {% endif %}
-                
-                {% if not adm %}
+            {% endif %}
+            
+            {% if not adm %}
                 <div class="container-botoes">
                     <button class="botao botao--azul" type="submit" name="associar_adm" value="associar_adm">Associar adm</button>
                 </div>
-                {% endif %}
-            </form>
+            {% endif %}
         {% endif %}
 
     </main>
