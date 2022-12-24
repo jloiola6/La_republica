@@ -110,6 +110,8 @@ def menu_perfil(request):
 
     template_name = 'usuario/menu-perfil.html'
 
+    agendamentos = Agendamento.objects.filter(cliente= usuario, situacao= 'Reservado')
+
     return TemplateResponse(request, template_name, locals())
 
 

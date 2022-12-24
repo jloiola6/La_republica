@@ -18,5 +18,15 @@
     <p><a href="{% url 'agendamento:listar-servicos' %}" class="texto-branco">Listar servicos</a></p>
     <br>
     <p><a href="{% url 'usuario:logout' %}" class="texto-branco">Sair</a></p>
+
+    {% if agendamentos %}
+      <br><br><hr><br><br>
+      <h1 class="texto-branco">Agendamento</h1>
+      <br>
+      <br>
+      {% for agenda in agendamentos %}
+        <p class="texto-branco">{{ agenda.servico }} - {{ agenda.data }} - {{ agenda.colaborador }} - {{ agenda.hora }}</p>
+      {% endfor %}
+    {% endif %}
   </main>
 {% endblock %}
