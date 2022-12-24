@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 import os
 from pathlib import Path
+import environ
+
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--(e-$@z4w+dhith_+0w2e5lb#xs+n#tv-fkq^-r$nm3ls!$tse'
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -147,14 +152,14 @@ AUTH_USER_MODEL = 'usuario.User'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'suporteatena@see.ac.gov.br'
-EMAIL_HOST_PASSWORD = 'jqomjljrxcdrenrk'
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 
 
 #Configuração do Strip
-STRIPE_TEST_PUBLIC_KEY = os.environ.get("STRIPE_TEST_PUBLIC_KEY", "pk_test_51M77STGORsxenfcwO0Ms6m5cxRi4h4NUJ8yAVVmpY31FimrwMZTAKlqyiHNjkz1MrO5xsdCJrPS0C2APfl2FzoF400xfodmNQc")
-STRIPE_TEST_SECRET_KEY = os.environ.get("STRIPE_TEST_SECRET_KEY", "sk_test_51M77STGORsxenfcwIpIsRrkxKv8cVgpzjmk3bVRcATWjRCFFKQxRpqgXoeSJOKeU0DTJPbxzOTfRLxR70zRcEtoe00PcCkVNWc")
+STRIPE_TEST_PUBLIC_KEY = os.environ.get("STRIPE_TEST_PUBLIC_KEY", env("STRIPE_TEST_PUBLIC_KEY"))
+STRIPE_TEST_SECRET_KEY = os.environ.get("STRIPE_TEST_SECRET_KEY", env("STRIPE_TEST_SECRET_KEY"))
 STRIPE_LIVE_MODE = False
 DJSTRIPE_WEBHOOK_SECRET = "whsec_xxx"  # We don't use this, but it must be set
 DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
