@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% load socialaccount %}
+
 {% block titulo %}Login{% endblock %}
 
 {% block conteudo %}
@@ -23,6 +25,10 @@
       
       <div class="container-botoes">
         <button class="botao botao--azul" type="submit">Entrar</button>
+      </div>
+      <br><hr><br>
+      <div class="container-botoes">
+        <a class="texto-verde" href="{% provider_login_url 'google' %}">Login com Google</a>
       </div>
     </form>
 

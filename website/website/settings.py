@@ -31,7 +31,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -44,7 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # 'social_django', #Google Login
+    #Login com o Google
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
     'apps.core',
     'apps.usuario',
@@ -78,8 +83,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 
                 #Google Login
-                # 'social_django.context_processors.backends',
-                # 'social_django.context_processors.login_redirect',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -166,12 +170,22 @@ DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
 
 
 # Google Login
-# AUTHENTICATION_BACKENDS = [
-#     'social_core.backends.google.GoogleOAuth2',
-#     'django.contrib.auth.backends.ModelBackend',
-# ]
+SITE_ID = 1
 
-# LOGIN_URL = 'login'
-# LOGIN_REDIRECT_URL = 'index'
-# LOGOUT_URL = 'logout'
-# LOGOUT_REDIRECT_URL = 'login'
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    }
+}
+LOGIN_URL = 'usuario:login'
+LOGIN_REDIRECT_URL = 'usuario:menu-perfil'
+LOGOUT_URL = 'usuario:logout'
+LOGOUT_REDIRECT_URL = 'usuario:login'
+

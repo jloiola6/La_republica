@@ -1,0 +1,24 @@
+{% extends "partials/_base.html" %}
+
+{% load static %}
+
+{% load i18n %}
+
+{% block titulo %}Login com {{ provider.name }} {% endblock %}
+
+{% block conteudo %}
+    <main>
+        {% include "partials/_container-titulo-pagina.html" with titulo="Login Google" %}
+
+        <br><br><br><br>
+
+        <h1 class="texto-medio texto-branco">{% blocktrans with provider.name as provider %}Entrar usando {{ provider }}{% endblocktrans %}</h1>
+        <br><br>
+        <p class="texto-medio texto-branco">{% blocktrans with provider.name as provider %}Você tem certeza que deseja iniciar uma sessão usando o {{ provider }}.{% endblocktrans %}</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">{% trans "Continue" %}</button>
+        </form>
+    </main>
+{% endblock %}
