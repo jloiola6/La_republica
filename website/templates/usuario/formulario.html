@@ -16,15 +16,20 @@
                 <input id="campo-nome" type="text" name="nome" maxlength="150" minlength="10" value="{{ usuario.first_name }}" required>
             </div>
 
-            <div class="formulario-grupo">
-                <label for="campo-email">E-mail</label>
-                <input id="campo-email" type="email" name="email" maxlength="50" minlength="10" value="{{ usuario.email }}" required disabled>
-            </div>
-
             {% if not usuario %}
+                <div class="formulario-grupo">
+                    <label for="campo-email">E-mail</label>
+                    <input id="campo-email" type="email" name="email" maxlength="50" minlength="10" value="{{ usuario.email }}" required>
+                </div>
+                
                 <div class="formulario-grupo">
                     <label for="campo-email">Senha</label>
                     <input id="campo-email" type="password" name="password" maxlength="15" minlength="8" required>
+                </div>
+            {% else %}
+                <div class="formulario-grupo">
+                    <label for="campo-email">E-mail</label>
+                    <input id="campo-email" type="email" name="email" maxlength="50" minlength="10" value="{{ usuario.email }}" required disabled>
                 </div>
             {% endif %}
             
