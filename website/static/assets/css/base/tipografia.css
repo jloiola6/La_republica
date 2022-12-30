@@ -33,3 +33,9 @@ body, body *{
 .texto-verde{
     color: var(--cor-texto-verde)
 }
+
+.link{
+    color: var(--cor-texto-branco);
+    font-weight: 500;
+    text-decoration: underline;
+}
