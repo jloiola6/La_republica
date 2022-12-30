@@ -50,7 +50,7 @@ def preco_cadastro(request, servico):
 def colaborador_servico_associar(request, servico):
     colaborador = request.POST.get('colaborador')
 
-    if Colaborador.objects.filter(id= colaborador).exists() and Servico.objects.filter(id= servico).exists():
+    if Colaborador.objects.filter(id= colaborador).exists() and servico:
         colaborador = Colaborador.objects.get(id= colaborador)
 
         if not ColaboradorServico.objects.filter(colaborador= colaborador, servico= servico).exists():
