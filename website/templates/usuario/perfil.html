@@ -12,7 +12,7 @@
         <br>
 
         <div class="container-botoes">
-            <a href="{% url 'usuario:editar-dados' %}"><button class="botao botao--azul">Editar Dados</button></a>
+            <a href="{% url 'usuario:editar-dados' perfil.id %}"><button class="botao botao--azul">Editar Dados</button></a>
         </div>
 
         {% if usuario_adm %}

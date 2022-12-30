@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% load socialaccount %}
+
 {% block titulo %}Criar Conta{% endblock %}
 
 {% block conteudo %}
@@ -13,7 +15,7 @@
 
             <div class="formulario-grupo">
                 <label for="campo-nome">Nome</label>
-                <input id="campo-nome" type="text" name="nome" maxlength="150" minlength="10" value="{{ usuario.first_name }}" required>
+                <input id="campo-nome" type="text" name="nome" maxlength="150" minlength="10" value="{{ perfil.first_name }}" required>
             </div>
 
             {% if not usuario %}
@@ -26,18 +28,7 @@
                     <label for="campo-senha">Senha</label>
                     <input id="campo-senha" type="password" name="password" maxlength="15" minlength="8" required>
                 </div>
-            {% else %}
-                <div class="formulario-grupo">
-                    <label for="campo-email">E-mail</label>
-                    <input id="campo-email" type="email" name="email" maxlength="50" minlength="10" value="{{ usuario.email }}" required disabled>
-                </div>
-            {% endif %}
-            
-            {% if usuario %}
-                <div class="container-botoes">
-                    <button class="botao botao--azul" type="submit">Editar</button>
-                </div>
-            {% else %}
+
                 <div class="container-botoes">
                     <button class="botao botao--azul" type="submit">Cadastrar</button>
                 </div>
@@ -53,7 +44,15 @@
                       <button class="botao botao--google" type="button"><i></i>Entrar com Google</button>
                     </a>
                   </div>
-                
+            {% else %}
+                <div class="formulario-grupo">
+                    <label for="campo-email">E-mail</label>
+                    <input id="campo-email" type="email" name="email" maxlength="50" minlength="10" value="{{ perfil.email }}" required disabled>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" type="submit">Editar</button>
+                </div>
             {% endif %}
         </form>
 
