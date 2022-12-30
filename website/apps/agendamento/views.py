@@ -139,3 +139,24 @@ def servico_colaborador(request, servico_id):
     return TemplateResponse(request, template_name, locals())
 
 
+@login_required(login_url='/usuario/login')
+def agendamentos(request, servico_id):
+    usuario = request.user
+    if not Adm.objects.filter(usuario= usuario).exists():
+        return HttpResponseRedirect('/')
+
+    template_name = 'agendamento/agendamentos.html'
+
+    
+    # servicos = Servico.objects.filter(id= servico_id)
+    # colaboradores_existente = ColaboradorServico.objects.filter(servico= servicos.last()).values_list('colaborador__id', flat= True).distinct()
+    # colaboradores = Colaborador.objects.exclude(id__in= colaboradores_existente)
+
+    # if request.method == 'POST':
+    #     colaborador_servico_associar(request, servicos.last())
+
+    #     return HttpResponseRedirect('/usuario/menu-perfil')
+
+    return TemplateResponse(request, template_name, locals())
+
+

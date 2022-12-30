@@ -1,0 +1,18 @@
+{% extends "partials/_base.html" %}
+
+{% load static %}
+
+{% block titulo %}Meu Perfil{% endblock %}
+
+{% block conteudo %}
+    <main>
+        {% include "partials/_container-titulo-pagina.html" with titulo="Lista de agendamentos" %}
+
+        <br><br>
+        {% for agendamento in agendamentos %}
+            <p class="texto-branco">{{ agendamento }}</p>
+            <br>
+        {% endfor %}
+
+    </main>
+{% endblock %}
