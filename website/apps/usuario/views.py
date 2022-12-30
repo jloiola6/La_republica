@@ -85,11 +85,13 @@ def login(request):
 @login_required(login_url='/usuario/login')
 def perfil(request, perfil_id):
     usuario = request.user
+    perfil = User.objects.get(id= perfil_id)
     if usuario.id != perfil_id and not Adm.objects.filter(usuario= usuario).exists():
         return HttpResponseRedirect('/')
 
     template_name = 'usuario/perfil.html'
 
+    usuario_adm = Adm.objects.filter(usuario__id= usuario.id).exists()
     adm = Adm.objects.filter(usuario__id= perfil_id).exists()
     colaborador = Colaborador.objects.filter(usuario__id= perfil_id).exists()
 

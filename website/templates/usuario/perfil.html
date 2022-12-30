@@ -8,14 +8,14 @@
     <main>
         {% include "partials/_container-titulo-pagina.html" with titulo="Meu Perfil" %}
 
-        <h2 class="texto-branco">Perfil de {{ usuario.first_name }}</h2>
+        <h2 class="texto-branco">Perfil de {{ perfil.first_name }}</h2>
         <br>
 
         <div class="container-botoes">
             <a href="{% url 'usuario:editar-dados' %}"><button class="botao botao--azul">Editar Dados</button></a>
         </div>
 
-        {% if adm %}
+        {% if usuario_adm %}
             {% if not colaborador %}
                 <div class="container-botoes">
                     <button class="botao botao--azul" type="submit" name="associar_colaborador" value="associar_colaborador">Associar colaborador</button>
