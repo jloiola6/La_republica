@@ -55,7 +55,7 @@ def editar_dados(request, perfil_id):
     if usuario.id != perfil_id and not Adm.objects.filter(usuario= usuario).exists():
         return HttpResponseRedirect('/')
 
-    template_name = 'usuario/formulario.html'
+    template_name = 'usuario/cadastro.html'
 
     if request.method == 'POST':
         campos_invalidos = editar_usuario(request, perfil)
