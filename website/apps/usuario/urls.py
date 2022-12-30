@@ -8,7 +8,7 @@ app_name = 'usuario'
 
 urlpatterns = [
     path('cadastro/', cadastro, name='cadastro'),    
-    path('editar-dados/', editar_dados, name='editar-dados'),    
+    path('editar-dados/<int:perfil_id>', editar_dados, name='editar-dados'),    
     path('login/', login, name='login'),
     path('logout/', logout, name='logout'),
     

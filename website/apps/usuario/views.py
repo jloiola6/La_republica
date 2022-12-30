@@ -34,7 +34,7 @@ def logout(request):
 
 
 def cadastro(request):
-    template_name = 'usuario/cadastro.html'
+    template_name = 'usuario/formulario.html'
 
     if request.method == 'POST':
         usuario, campos_invalidos = cadastrar_usuario(request)
@@ -49,13 +49,16 @@ def cadastro(request):
 
 
 @login_required(login_url='/usuario/login')
-def editar_dados(request):
+def editar_dados(request, perfil_id):
     usuario = request.user
+    perfil = User.objects.get(id= perfil_id)
+    if usuario.id != perfil_id and not Adm.objects.filter(usuario= usuario).exists():
+        return HttpResponseRedirect('/')
 
     template_name = 'usuario/formulario.html'
 
     if request.method == 'POST':
-        campos_invalidos = editar_usuario(request, usuario)
+        campos_invalidos = editar_usuario(request, perfil)
         
         if campos_invalidos == []:
             return HttpResponseRedirect('/')
