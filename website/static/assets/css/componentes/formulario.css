@@ -4,15 +4,10 @@
     display: flex;
     flex-direction: column;
     gap: .5rem;
-    margin-top: 1rem;
-}
-
-input[type="hidden"] + .formulario-grupo{
-    margin-top: 0;
 }
 
 label{
-    color: #FFFFFF;
+    color: var(--cor-texto-branco);
     font-weight: 500;
 }
 
@@ -20,7 +15,7 @@ input{
     background-color: transparent;
     border: 1px solid #FFFFFF;
     border-radius: 0.5rem;
-    color: #FFFFFF;
+    color: var(--cor-texto-branco);
     height: 2.5rem;
     font-size: 1rem;
     font-weight: 400;

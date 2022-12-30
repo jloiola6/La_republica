@@ -34,7 +34,7 @@ def logout(request):
 
 
 def cadastro(request):
-    template_name = 'usuario/formulario.html'
+    template_name = 'usuario/cadastro.html'
 
     if request.method == 'POST':
         usuario, campos_invalidos = cadastrar_usuario(request)
