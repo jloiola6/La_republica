@@ -1,0 +1,64 @@
+{% extends "partials/_base.html" %}
+
+{% load static %}
+
+{% block titulo %}Criar Conta{% endblock %}
+
+{% block conteudo %}
+    <main>
+        {% include "partials/_container-titulo-pagina.html" with titulo="Criar Conta" %}
+        
+        <form id="formulario-login" class="surface" method="POST">
+            {% csrf_token %}
+
+            <div class="formulario-grupo">
+                <label for="campo-nome">Nome</label>
+                <input id="campo-nome" type="text" name="nome" maxlength="150" minlength="10" value="{{ usuario.first_name }}" required>
+            </div>
+
+            {% if not usuario %}
+                <div class="formulario-grupo">
+                    <label for="campo-email">E-mail</label>
+                    <input id="campo-email" type="email" name="email" maxlength="50" minlength="10" required>
+                </div>
+                
+                <div class="formulario-grupo">
+                    <label for="campo-senha">Senha</label>
+                    <input id="campo-senha" type="password" name="password" maxlength="15" minlength="8" required>
+                </div>
+            {% else %}
+                <div class="formulario-grupo">
+                    <label for="campo-email">E-mail</label>
+                    <input id="campo-email" type="email" name="email" maxlength="50" minlength="10" value="{{ usuario.email }}" required disabled>
+                </div>
+            {% endif %}
+            
+            {% if usuario %}
+                <div class="container-botoes">
+                    <button class="botao botao--azul" type="submit">Editar</button>
+                </div>
+            {% else %}
+                <div class="container-botoes">
+                    <button class="botao botao--azul" type="submit">Cadastrar</button>
+                </div>
+
+                <div class="container-texto-linha">
+                    <div></div>
+                    <span>Você também pode</span>
+                    <div></div>
+                  </div>
+                  
+                  <div class="container-botoes">
+                    <a href="{% provider_login_url 'google' %}">
+                      <button class="botao botao--google" type="button"><i></i>Entrar com Google</button>
+                    </a>
+                  </div>
+                
+            {% endif %}
+        </form>
+
+        {% for campo in campos_invalidos %}
+            <label>{{ campo }}</label>
+        {% endfor %}
+    </main>
+{% endblock %}

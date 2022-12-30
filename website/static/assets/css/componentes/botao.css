@@ -1,13 +1,16 @@
 /* Estilização dos botões */
 
 .container-botoes{
-    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .botao{
     border: none;
     border-radius: .5rem;
-    color: #FFFFFF;
+    box-sizing: border-box;
+    color: var(--cor-texto-branco);
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
@@ -16,11 +19,29 @@
     width: 100%;
 }
 
+    .botao--secundario{
+        border: 1.5px solid #FFFFFF;
+        background-color: transparent;
+    }
 
     .botao--azul{
-        background-color: #1A53A9;
+        background-color: var(--cor-azul);
     }
 
     .botao--azul:hover{
         background-color: #2669ce;
+    }
+
+    .botao--google{
+        color: var(--cor-texto-preto);
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .botao--google > i{
+        aspect-ratio: 1;
+        background-image: url('../../img/logo-google.png');
+        background-size: cover;
+        height: 1.5rem;
     }

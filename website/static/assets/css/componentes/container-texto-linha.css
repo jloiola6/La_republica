@@ -1,0 +1,17 @@
+.container-texto-linha{
+    align-items: center;
+    display: flex;
+    gap: .25rem;
+}
+
+    .container-texto-linha > div{
+        background-color: #FFFFFF;
+        height: 1px;
+        flex-grow: 1;
+    }
+
+    .container-texto-linha > span{
+        color: var(--cor-texto-branco);
+        font-weight: 500;
+        font-size: .75rem;
+    }

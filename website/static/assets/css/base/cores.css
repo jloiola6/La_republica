@@ -6,7 +6,8 @@ html{
 
     --cor-background: #1A1A1A;
     --cor-surface: #333333;
-
+    --cor-surface-blur: rgba(0, 0, 0, .6);
+    
     --cor-texto-branco: #FFFFFF;
     --cor-texto-verde: #1AA97E;
 
