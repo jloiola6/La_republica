@@ -49,7 +49,7 @@ def editar_usuario(request, usuario):
 
 def colaborador_associar(request, perfil_id):
     if User.objects.filter(id= perfil_id).exists():
-        usuario = User.objects.get(id= colaborador)
+        usuario = User.objects.get(id= perfil_id)
         
         if not Colaborador.objects.filter(usuario= usuario).exists():
             colaborador = Colaborador()

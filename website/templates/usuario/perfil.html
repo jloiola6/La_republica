@@ -16,17 +16,21 @@
         </div>
 
         {% if usuario_adm %}
-            {% if not colaborador %}
-                <div class="container-botoes">
-                    <button class="botao botao--azul" type="submit" name="associar_colaborador" value="associar_colaborador">Associar colaborador</button>
-                </div>
-            {% endif %}
-            
-            {% if not adm %}
+            <form method="POST">
+                {% csrf_token %}
+
+                {% if not colaborador %}
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" type="submit" name="associar_colaborador" value="associar_colaborador">Associar colaborador</button>
+                    </div>
+                {% endif %}
+                
+                {% if not adm %}
                 <div class="container-botoes">
                     <button class="botao botao--azul" type="submit" name="associar_adm" value="associar_adm">Associar adm</button>
                 </div>
-            {% endif %}
+                {% endif %}
+            </form>
         {% endif %}
 
     </main>
