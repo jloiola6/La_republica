@@ -1,6 +1,7 @@
 /* Estilização do container que carrega o título da página e a logo */
 
 .container-titulo-pagina{
+    align-items: center;
     display: flex;
     justify-content: space-between;
 }
