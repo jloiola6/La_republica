@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="icon" conten>
+
+    <title>{% block titulo %}{% endblock %} | La Republica</title>
+
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+
+    <link rel="icon" href="{% static 'assets/img/icone-aba.png' %}">
+
+    <!-- Estilizações gerais -->
+    <link rel="stylesheet" href="{% static 'assets/css/base/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/base/cores.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/base/base.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/base/tipografia.css' %}">
+    
+    <!-- Estilização de componentes -->
+    <link rel="stylesheet" href="{% static 'assets/css/componentes/surface.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/componentes/formulario.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/componentes/container-titulo-pagina.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/componentes/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/componentes/botao.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/componentes/container-texto-linha.css' %}">
+
+    <!-- Estilização de layouts individuais -->
+    {% block css_layout %}{% endblock %}
+
+    {% block extra_head %}
+    {% endblock %}
+  </head>
+  <body>
+    {% block body %}
+
+    {% if messages %}
+      <div style="display: none;">
+        <strong>Messages:</strong>
+        <ul>
+          {% for message in messages %}
+          <li>{{message}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+
+
+    <div style="display: none;">
+      <strong>Menu:</strong>
+      <ul>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
+        <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+        {% else %}
+        <li><a href="{% url 'account_login' %}">Sign In</a></li>
+        <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+        {% endif %}
+      </ul>
+    </div>
+    {% block content %}
+    {% endblock %}
+    {% endblock %}
+    {% block extra_body %}
+    {% endblock %}
+  </body>
+</html>

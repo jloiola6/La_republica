@@ -89,8 +89,9 @@ def consultar_horarios(servico, hora= None):
             'horarios': consultar_servico(servico, now, hora_atual, minuto_atual)})
         dias -= 1
 
-    for i in range(1, dias, 1):
+    for i in range(0, dias, 1):
         date = now + timedelta(days=i)
+        print(date)
         if date.weekday() != 6:
             grades.append({'data':date.date(),
                 'nome': nome_semana[date.weekday()],
