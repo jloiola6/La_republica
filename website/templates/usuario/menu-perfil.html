@@ -4,11 +4,38 @@
 
 {% block titulo %}Meu Perfil{% endblock %}
 
+{% block css_layout %}
+  <link rel="stylesheet" href="{% static 'assets/css/layout/usuario/perfil.css' %}">
+{% endblock %}
+
 {% block conteudo %}
   <main>
     {% include "partials/_container-titulo-pagina.html" with titulo="Meu Perfil" %}
+
+    <div class="surface container-perfil">
+      <img class="perfil-imagem" src="{% static 'assets/img/perfil-teste.png' %}" alt="">
+
+      <div class="perfil-usuario">
+        <h2 class="texto-branco texto-medio texto-20">{{ usuario.first_name }}</h2>
+        <p class="texto-cinza texxto-medio texto-12">{{ usuario.email }}</p>
+      </div>
+    </div>
+
+    <div class="container-cards-usuario">
+      <a class="surface card-usuario" href="#">
+          {% include 'usuario/perfil/partials/icones/editar.svg' %}
+
+          <span class="card-titulo">Editar dados</span>
+      </a>
+
+      <a class="surface card-usuario" href="{% url 'usuario:logout' %}">
+          {% include 'usuario/perfil/partials/icones/sair.svg' %}
+
+          <span class="card-titulo">Sair</span>
+      </a>
+    </div>
     
-    <h2 class="texto-branco">{{ usuario.nome }}</h2>
+    
     <br>
     <br>
     <p><a href="{% url 'usuario:perfil' usuario.id %}" class="texto-branco">Meu Perfil</a></p>

@@ -1,0 +1,24 @@
+/* Estilização da página do clube */
+
+.container-plano{
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+    .plano-imagem{
+        aspect-ratio: 1;
+        border-radius: .5rem;
+        height: 5rem;
+        object-fit: cover;
+    }
+
+    .plano-descricao{
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+
+    .plano-titulo{
+        text-transform: uppercase;
+    }

@@ -1,0 +1,30 @@
+/* Estilização da página inicial */
+
+.container-home{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.container-plano{
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+    .plano-imagem{
+        aspect-ratio: 1;
+        border-radius: .5rem;
+        height: 3rem;
+        object-fit: cover;
+    }
+
+    .plano-descricao{
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+
+    .plano-titulo{
+        text-transform: uppercase;
+    }

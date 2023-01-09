@@ -55,7 +55,7 @@ def editar_dados(request, perfil_id):
     if usuario.id != perfil_id and not Adm.objects.filter(usuario= usuario).exists():
         return HttpResponseRedirect('/')
 
-    template_name = 'usuario/cadastro.html'
+    template_name = 'usuario/cadastrogit.html'
 
     if request.method == 'POST':
         campos_invalidos = editar_usuario(request, perfil)
@@ -112,6 +112,10 @@ def perfil(request, perfil_id):
 @login_required(login_url='/usuario/login')
 def menu_perfil(request):
     usuario = request.user
+
+    print(usuario)
+    print(usuario.first_name)
+    print(usuario.email)
 
     template_name = 'usuario/menu-perfil.html'
 

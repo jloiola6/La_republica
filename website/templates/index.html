@@ -1,9 +1,55 @@
 {% extends "partials/_base.html" %}
 
+{% load static %}
+
 {% block titulo %}Home{% endblock titulo %}
+
+{% block css_layout %}
+  <link rel="stylesheet" href="{% static 'assets/css/layout/index.css' %}">
+{% endblock %}
 
 {% block conteudo %}
   <main>
     {% include "partials/_container-titulo-pagina.html" with titulo="BEM VINDO" %}
+
+    <div class="container-home">
+      <h2 class="texto-branco texto-medio texto-20">SOMOS A LA REPUBLICA</h2>
+
+      <p class="texto-branco texto-medio">A primeira barbearia por assinatura do Acre!</p>
+    </div>
+
+    <div class="surface container-plano">
+      <img class="plano-imagem" src="{% static 'assets/img/home/barba.png' %}" alt="Barba">
+
+      <div class="plano-descricao">
+        <p class="texto-branco texto-negrito texto-12 plano-titulo">Barba sempre bem feita</p>
+        <span class="texto-branco texto-medio texto-12">Faça sua barba quando quiser</span>
+      </div>
+    </div>
+
+    <div class="surface container-plano">
+      <img class="plano-imagem" src="{% static 'assets/img/home/corte.png' %}" alt="Corte">
+
+      <div class="plano-descricao">
+        <p class="texto-branco texto-negrito texto-12 plano-titulo">Corte de cabelo ilimitado</p>
+        <span class="texto-branco texto-medio texto-12">Cabelo sempre bem cortado</span>
+      </div>
+    </div>
+
+    <div class="surface container-plano">
+      <img class="plano-imagem" src="{% static 'assets/img/home/convidado.png' %}" alt="Convidado">
+
+      <div class="plano-descricao">
+        <p class="texto-branco texto-negrito texto-12 plano-titulo">Convidado VIP</p>
+        <span class="texto-branco texto-medio texto-12">No mês do seu aniversário</span>
+      </div>
+    </div>
+
+    <div class="container-botoes">
+      <a href="{% url 'clube:index' %}">
+        <button class="botao botao--secundario">Conheça nossos planos</button>
+      </a>
+    </div>
+
   </main>
 {% endblock %}

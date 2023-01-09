@@ -1,8 +1,50 @@
 {% extends "partials/_base.html" %}
 
-{% block titulo %}Home{% endblock titulo %}
+{% load static %}
+
+{% block titulo %}Clube{% endblock titulo %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/clube/index.css' %}">
+{% endblock %}
 
 {% block conteudo %}
+    <main>
+        {% include "partials/_container-titulo-pagina.html" with titulo="Clube" %}
+
+        <h2 class="texto-branco texto-medio texto-20">Conheça os nossos planos</h2>
+
+        <div class="surface container-plano">
+            <img class="plano-imagem" src="{% static 'assets/img/clube/cabelo-barba.png' %}" alt="Cabelo e barba">
+      
+            <div class="plano-descricao">
+              <p class="texto-branco texto-medio plano-titulo">Cabelo e barba</p>
+              <span class="texto-branco texto-medio texto-20">R$ 119,90</span>
+              <span class="texto-branco texto-medio texto-12">por 12 meses</span>
+            </div>
+        </div>
+
+        <div class="surface container-plano">
+            <img class="plano-imagem" src="{% static 'assets/img/clube/corte.png' %}" alt="Corte">
+      
+            <div class="plano-descricao">
+              <p class="texto-branco texto-medio plano-titulo">Cabelo</p>
+              <span class="texto-branco texto-medio texto-20">R$ 70,90</span>
+              <span class="texto-branco texto-medio texto-12">por 12 meses</span>
+            </div>
+        </div>
+
+        <div class="surface container-plano">
+            <img class="plano-imagem" src="{% static 'assets/img/clube/barba.png' %}" alt="Barba">
+      
+            <div class="plano-descricao">
+              <p class="texto-branco texto-medio plano-titulo">Barba</p>
+              <span class="texto-branco texto-medio texto-20">R$ 89,90</span>
+              <span class="texto-branco texto-medio texto-12">por 12 meses</span>
+            </div>
+        </div>
+    </main>
+
     <script src="https://js.stripe.com/v3/"></script>
 
     <br><br>
