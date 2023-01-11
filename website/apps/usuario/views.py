@@ -112,11 +112,6 @@ def perfil(request, perfil_id):
 @login_required(login_url='/usuario/login')
 def menu_perfil(request):
     usuario = request.user
-
-    print(usuario)
-    print(usuario.first_name)
-    print(usuario.email)
-
     template_name = 'usuario/menu-perfil.html'
 
     agendamentos = Agendamento.objects.filter(cliente= usuario, situacao= 'Reservado')
