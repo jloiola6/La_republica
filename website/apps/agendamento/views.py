@@ -24,33 +24,36 @@ def index(request):
 
 
 @login_required(login_url='/usuario/login')
-def agendamento_horario(request, servico_id):
+def agendamento_horario(request, servico_id, colaborador_id):
     usuario = request.user
     
     template_name = 'agendamento/horario.html'
 
     servico = Servico.objects.get(id= servico_id)
-    grades = consultar_horarios(servico)
+    colaborador = Colaborador.objects.get(id= colaborador_id)
+    grades = consultar_horarios(servico, colaborador)
 
     return TemplateResponse(request, template_name, locals())
 
 
 @login_required(login_url='/usuario/login')
-def agendamento_concluir(request, servico_id, data, hora):
+def agendamento_colaborador(request, servico_id):
     usuario = request.user
     servico = Servico.objects.get(id= servico_id)
-    data = datetime.strptime(data, '%Y-%m-%d').date()
+    # data = datetime.strptime(data, '%Y-%m-%d').date()
 
-    if not consultar_servico(servico, data, hora= hora):
-        return HttpResponseRedirect('/')
+    # if not consultar_servico(servico, data, hora= hora):
+    #     return HttpResponseRedirect('/')
     
-    template_name = 'agendamento/concluir.html'
+    template_name = 'agendamento/colaborador.html'
     
     preco = PrecoServico.objects.get(servico= servico, situacao= 1)
-    colaboradores = verificar_colaborador(preco, data, hora)
+    # colaboradores = verificar_colaborador(preco, data, hora)
+    colaboradores = Colaborador.objects.filter(situacao= 1)
+    print(colaboradores)
 
-    if request.method == 'POST':
-        agendamento(request, usuario, preco, data, hora)
+    # if request.method == 'POST':
+    #     agendamento(request, usuario, preco, data, hora)
     
     return TemplateResponse(request, template_name, locals())
 

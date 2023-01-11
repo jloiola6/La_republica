@@ -17,7 +17,7 @@
             <p><a href="{% url 'agendamento:perfil-servico' servico.id %}" class="texto-branco">{{ grade.nome }}, {{ grade.data }}</a></p>
             <br><br><br>
             {% for hora in grade.horarios %}
-                <a href="{% url 'agendamento:concluir' servico.id grade.data hora %}" class="texto-branco"><span class="texto-branco">{{ hora }} | </span></a>
+                <a href="#" class="texto-branco"><span class="texto-branco">{{ hora }} | </span></a>
             {% endfor %}
             <br><br><br>
         {% endfor %}

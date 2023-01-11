@@ -10,7 +10,7 @@
 
         <br><br>
         {% for servico in servicos %}
-            <p><a href="{% url 'agendamento:horario' servico.id %}" class="texto-branco">{{ servico }}</a></p>
+            <p><a href="{% url 'agendamento:colaborador' servico.id %}" class="texto-branco">{{ servico }}</a></p>
             <br>
         {% endfor %}
 

@@ -1,0 +1,21 @@
+{% extends "partials/_base.html" %}
+
+{% load static %}
+
+{% block titulo %}Meu Perfil{% endblock %}
+
+{% block conteudo %}
+    <main>
+        {% include "partials/_container-titulo-pagina.html" with titulo="Finalizar agendamento" %}
+
+        <br><br>
+        <h1 class="texto-branco">Serviço: {{ servico.nome }} - Duração: {{ servico.duracao }}m</h1>
+        <br>
+
+        <br><hr><br>
+        {% for colaborador in colaboradores %}
+            <a href="{% url 'agendamento:horario' servico_id colaborador.id %}" class="texto-branco"><span class="texto-branco">{{ colaborador }} | </span></a>
+        {% endfor %}
+
+    </main>
+{% endblock %}
