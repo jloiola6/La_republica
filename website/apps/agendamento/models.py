@@ -14,6 +14,10 @@ class Servico(models.Model):
         return self.nome
 
 
+    def path_url(self):
+        return self.imagem.replace('static/', '')
+
+
 class PrecoServico(models.Model):
     servico = models.ForeignKey(Servico, on_delete=models.DO_NOTHING)
     dt_inicio = models.DateField(auto_now_add=True)
