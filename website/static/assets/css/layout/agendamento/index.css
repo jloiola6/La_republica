@@ -1,0 +1,27 @@
+/* Estilização da página de agendamentos */
+
+.container-servico{
+    align-items: center;
+    cursor: pointer;
+    flex-direction: row;
+    padding-block: .5rem;
+}
+
+    .servico-imagem{
+        aspect-ratio: 1;
+        border-radius: 100%;
+        height: 3.5rem;
+        object-fit: cover;
+    }
+
+    .servico-descricao{
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+
+.servico-imagem-titulo{
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+}

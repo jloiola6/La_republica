@@ -5,21 +5,25 @@
 body, body *{
     font-family: 'Poppins', sans-serif;
     letter-spacing: .5px;
+    line-height: 24px;
 }
 
 .titulo-pagina{
     font-size: 1.5rem;
     font-weight: 600;
+    line-height: 36px;
     text-transform: uppercase ;
     text-align: left;
 }
 
 .texto-20{
     font-size: 1.25rem;
+    line-height: 30px;
 }
 
 .texto-12{
     font-size: 0.75rem;
+    line-height: 18px;
 }
 
 .texto-normal{

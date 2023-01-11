@@ -2,17 +2,35 @@
 
 {% load static %}
 
-{% block titulo %}Meu Perfil{% endblock %}
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/agendamento/index.css' %}">
+{% endblock %}
+
+{% block titulo %}Agendamento{% endblock %}
 
 {% block conteudo %}
     <main>
         {% include "partials/_container-titulo-pagina.html" with titulo="Agendamento" %}
 
-        <br><br>
-        {% for servico in servicos %}
-            <p><a href="{% url 'agendamento:horario' servico.id %}" class="texto-branco">{{ servico }}</a></p>
-            <br>
-        {% endfor %}
+        <p class="texto-branco texto-medio texto-20">Escolha uma opção</p>
 
+        {% for servico in servicos %}
+            <div data-modal-abrir="servico-{{ servico.id }}" class="surface container-servico">
+                <img class="servico-imagem" src="{% static servico.path_url %}" alt="{{ servico.nome }}">
+
+                <div class="servico-descricao">
+                    <h2 class="texto-branco texto-medio">{{ servico.nome }}</h2>
+
+                    <div>
+                        <p class="texto-branco texto-medio">R$ {{ servico.preco }}</p>
+                        <p class="texto-cinza texto-12 texto-medio">{{ servico.duracao }} min</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </main>
+
+    {% include 'agendamento/partials/_modais-descricao.html' %}
+
+    <script src="{% static 'assets/js/module/modal.js' %}"></script>
 {% endblock %}

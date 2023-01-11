@@ -44,4 +44,5 @@
         color: var(--cor-texto-branco);
         font-size: .75rem;
         font-weight: 500;
+        line-height: 18px;
     }

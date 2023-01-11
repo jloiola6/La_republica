@@ -30,6 +30,7 @@
         <link rel="stylesheet" href="{% static 'assets/css/componentes/navbar.css' %}">
         <link rel="stylesheet" href="{% static 'assets/css/componentes/botao.css' %}">
         <link rel="stylesheet" href="{% static 'assets/css/componentes/container-texto-linha.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/componentes/modal.css' %}">
 
         <!-- Estilização de layouts individuais -->
         {% block css_layout %}{% endblock %}
@@ -39,7 +40,5 @@
         {% block conteudo %}{% endblock %}
 
         {% include "partials/_navbar.html" %}
-
-        <script src="{% static 'assets/js/base/formulario.js' %}"></script>
     </body>
 </html>

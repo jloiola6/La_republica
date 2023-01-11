@@ -1,0 +1,22 @@
+{% load static %}
+
+{% for servico in servicos %}
+    <dialog data-modal="servico-{{ servico.id }}" class="modal modal--servico">
+        <div class="servico-imagem-titulo">
+            <img class="servico-imagem" src="{% static servico.path_url %}" alt="{{ servico.nome }}">
+            <h3 class="texto-branco texto-medio">{{ servico.nome }}</h2>
+        </div>
+
+        <p class="texto-branco texto-medio"><b>Duração: </b>{{ servico.duracao }} min</p>
+        
+        <p class="texto-branco texto-medio">{{ servico.descricao }}</p>
+        
+        <p class="texto-branco texto-medio"><b>Preço: </b>R$ {{ servico.preco }}</p>
+
+        <div class="container-botoes">
+            <a href="{% url 'agendamento:servico-colaborador' servico.id %}">
+                <button class="botao botao--azul">Agendar</button>
+            </a>
+        </div>
+    </dialog>
+{% endfor %}

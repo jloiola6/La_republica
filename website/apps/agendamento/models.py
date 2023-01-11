@@ -13,10 +13,11 @@ class Servico(models.Model):
     def __str__(self):
         return self.nome
 
-
     def path_url(self):
-        return self.imagem.replace('static/', '')
+        return str(self.imagem).replace('static/', '')
 
+    def preco(self):
+        return str(PrecoServico.objects.get(servico__id= self.id, situacao= 1).valor_total)
 
 class PrecoServico(models.Model):
     servico = models.ForeignKey(Servico, on_delete=models.DO_NOTHING)
